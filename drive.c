@@ -194,10 +194,20 @@ void driveD(uint16_t dist){
   MF.FLAG.ACCL = 0;                   //加速・減速・デフォルトインターバルフラグをクリア
   drive_start();                      //走行開始
 
-  int16_t c_pulse = dist - (t_cnt_l - min_t_cnt);     //等速走行距離 = 総距離 - 減速に必要な距離
+  int decl_pulse = (t_cnt_l - min_t_cnt)/3;
+
+  int16_t c_pulse = dist - decl_pulse;     //等速走行距離 = 総距離 - 減速に必要な距離
   if(c_pulse > 0){
     //----等速走行----
-    while((pulse_l < c_pulse) || (pulse_r < c_pulse));  //左右のモータが等速分のパルス以上進むまで待機
+    if(decl_pulse % 3 == 0){
+      while((pulse_l < c_pulse) || (pulse_r < c_pulse));  //左右のモータが等速分のパルス以上進むまで待機
+    }
+    else if(decl_pulse % 3 == 1){
+      while((pulse_l < c_pulse + 1) || (pulse_r < c_pulse + 1));  //左右のモータが等速分のパルス以上進むまで待機
+    }
+    else if(decl_pulse % 3 == 2){
+      while((pulse_l < c_pulse + 2) || (pulse_r < c_pulse + 2));  //左右のモータが等速分のパルス以上進むまで待機
+    }
   }
 
   //----減速走行----

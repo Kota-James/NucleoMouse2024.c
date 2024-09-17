@@ -41,7 +41,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
         //====加減速処理====
         //----減速処理----
         if (MF.FLAG.DECL) { // 減速フラグが立っている場合
-            t_cnt_l = max(t_cnt_l - 1, min_t_cnt);
+            t_cnt_l = max(t_cnt_l - 3, min_t_cnt);
         }
         //----加速処理----
         else if (MF.FLAG.ACCL) { // 加速フラグが立っている場合
@@ -73,7 +73,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
         //====加減速処理====
         //----減速処理----
         if (MF.FLAG.DECL) { // 減速フラグが立っている場合
-            t_cnt_r = max(t_cnt_r - 1, min_t_cnt);
+            t_cnt_r = max(t_cnt_r - 3, min_t_cnt);
         }
         //----加速処理----
         else if (MF.FLAG.ACCL) { // 加速フラグが立っている場合
