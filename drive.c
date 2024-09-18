@@ -110,6 +110,42 @@ void rotate_L90(void){
 
 
 //+++++++++++++++++++++++++++++++++++++++++++++++
+//rotate_R90_S
+// スラローム走行で右に90度回転する
+// 引数：なし
+// 戻り値：なし
+//+++++++++++++++++++++++++++++++++++++++++++++++
+void rotate_R90_S(void){
+
+  MF.FLAG.CTRL = 0;                   //制御無効
+  MF.FLAG.ROTATER = 1;
+  drive_set_dir(FORWARD);            //右に旋回するようモータの回転方向を設定
+  drive_wait();                       //機体が安定するまで待機
+  driveR(PULSE_ROT_OUT, PULSE_ROT_IN);              //デフォルトインターバルで指定パルス分回転。回転後に停止する
+  drive_wait();                       //機体が安定するまで待機
+  MF.FLAG.ROTATER = 0;
+}
+
+//+++++++++++++++++++++++++++++++++++++++++++++++
+//rotate_L90_S
+// スラローム走行で左に90度回転する
+// 引数：なし
+// 戻り値：なし
+//+++++++++++++++++++++++++++++++++++++++++++++++
+void rotate_L90_S(void){
+
+  MF.FLAG.CTRL = 0;                   //制御を無効にする
+  MF.FLAG.ROTATEL = 1;
+  drive_set_dir(FORWARD);            //左に旋回するようモータの回転方向を設定
+  drive_wait();                       //機体が安定するまで待機
+  driveR(PULSE_ROT_IN, PULSE_ROT_OUT);              //デフォルトインターバルで指定パルス分回転。回転後に停止する
+  drive_wait();                       //機体が安定するまで待機
+  MF.FLAG.ROTATEL = 0;
+}
+
+
+
+//+++++++++++++++++++++++++++++++++++++++++++++++
 //rotate_180
 // 180度回転する
 // 引数：なし
@@ -170,6 +206,8 @@ void driveA(uint16_t dist){
   MF.FLAG.DECL = 0;
   MF.FLAG.DEF = 0;
   MF.FLAG.ACCL = 1;                   //減速・デフォルトインターバルフラグをクリア，加速フラグをセット
+  MF.FLAG.ROTATEL = 0;
+  MF.FLAG.ROTATER = 0;
   drive_reset_t_cnt();                //テーブルカウンタをリセット
   drive_start();                      //走行開始
 
@@ -192,6 +230,8 @@ void driveD(uint16_t dist){
   MF.FLAG.DECL = 0;
   MF.FLAG.DEF = 0;
   MF.FLAG.ACCL = 0;                   //加速・減速・デフォルトインターバルフラグをクリア
+  MF.FLAG.ROTATEL = 0;
+  MF.FLAG.ROTATER = 0;
   drive_start();                      //走行開始
 
   int decl_pulse = (t_cnt_l - min_t_cnt) / T_CNT_DECL;  //減速に必要な距離
@@ -225,6 +265,8 @@ void driveU(uint16_t dist){
   MF.FLAG.DECL = 0;
   MF.FLAG.DEF = 0;
   MF.FLAG.ACCL = 0;                   //加速・減速・デフォルトインターバルフラグをクリア
+  MF.FLAG.ROTATEL = 0;
+  MF.FLAG.ROTATER = 0;
   drive_start();                      //走行開始
 
   //====走行====
@@ -246,6 +288,8 @@ void driveC(uint16_t dist){
   MF.FLAG.DECL = 0;
   MF.FLAG.DEF = 1;
   MF.FLAG.ACCL = 0;                   //加速・減速フラグをクリア，デフォルトインターバルフラグをセット
+  MF.FLAG.ROTATEL = 0;
+  MF.FLAG.ROTATER = 0;
   drive_start();                      //走行開始
 
   //====回転====
@@ -254,6 +298,28 @@ void driveC(uint16_t dist){
   drive_stop();
 }
 
+
+//+++++++++++++++++++++++++++++++++++++++++++++++
+//driveR
+// 指定パルス分デフォルトインターバルで走行して停止する
+// 引数1：dist …… 走行するパルス
+// 戻り値：なし
+//+++++++++++++++++++++++++++++++++++++++++++++++
+void driveR(uint16_t dist_l, uint16_t dist_r){
+
+  //====回転開始====
+  MF.FLAG.DECL = 0;
+  MF.FLAG.DEF = 0;
+  MF.FLAG.ACCL = 0;                   //加速・減速フラグをクリア，デフォルトインターバルフラグをセット
+  drive_start();                      //走行開始
+
+  //====回転====
+  while((pulse_l < dist_l) || (pulse_r < dist_r));      //左右のモータが定速分のパルス以上進むまで待機
+
+  drive_stop();
+  MF.FLAG.ROTATEL = 0;
+  MF.FLAG.ROTATER = 0;
+}
 
 /*==========================================================
     初期化関数・設定関数・その他関数

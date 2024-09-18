@@ -213,6 +213,36 @@ int main(void)
             //==== empty mode ====
 
             printf("Mode 3: .\n");
+            drive_enable_motor();
+
+            rotate_R90();
+            drive_wait();
+            set_position(0);
+            drive_wait();
+            rotate_L90();
+            drive_wait();
+            set_position(0);
+            drive_wait();
+
+            MF.FLAGS = 0;
+            drive_set_dir(FORWARD);     //前進するようにモータの回転方向を設定
+
+            driveA(PULSE_SEC_HALF);     //半区画のパルス分加速しながら走行
+            //driveU(PULSE_SEC_HALF);     //半区画のパルス分等速で走行
+            driveD(PULSE_SEC_HALF);     //半区画のパルス分減速しながら走行。走行後は停止する
+
+            rotate_R90();
+            driveC(PULSE_SEC_HALF);     //半区画のパルス分デフォルトインターバルで走行
+
+            for(int i = 0; i < 16; i++){
+              driveA(PULSE_SEC_HALF);       //半区画のパルス分加速しながら走行
+              one_sectionU();     //1区画のパルス分等速で走行
+              driveD(PULSE_SEC_HALF);       //半区画のパルス分減速しながら走行。走行後は停止する
+
+              rotate_R90_S();
+            }
+
+            drive_disable_motor();
             break;
 
         case 4:

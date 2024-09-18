@@ -54,7 +54,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                 &htim16,
                 DEFAULT_INTERVAL -
                     dl); // デフォルトインターバルに制御を加えた値に設定
+
+        }else if(MF.FLAG.ROTATEL){
+            __HAL_TIM_SET_AUTORELOAD(&htim16, ARR_IN);
         }
+
+        else if(MF.FLAG.ROTATER){
+            __HAL_TIM_SET_AUTORELOAD(&htim16, ARR_OUT);
+        }
+
         //----それ以外の時はテーブルカウンタの指し示すインターバル----
         else {
             __HAL_TIM_SET_AUTORELOAD(
@@ -87,6 +95,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                 DEFAULT_INTERVAL -
                     dr); // デフォルトインターバルに制御を加えた値に設定
         }
+
+        else if(MF.FLAG.ROTATEL){
+            __HAL_TIM_SET_AUTORELOAD(&htim17, ARR_OUT);
+        }
+
+        else if(MF.FLAG.ROTATER){
+            __HAL_TIM_SET_AUTORELOAD(&htim17, ARR_IN);
+        }
+
         //----それ以外の時はテーブルカウンタの指し示すインターバル----
         else {
             __HAL_TIM_SET_AUTORELOAD(
