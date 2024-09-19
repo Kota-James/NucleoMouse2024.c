@@ -239,7 +239,7 @@ int main(void)
               one_sectionU();     //1区画のパルス分等速で走行
               driveD(PULSE_SEC_HALF);       //半区画のパルス分減速しながら走行。走行後は停止する
 
-              rotate_R90_S();
+              rotate_L90_S();
             }
 
             drive_disable_motor();
