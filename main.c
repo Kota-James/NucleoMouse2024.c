@@ -241,6 +241,7 @@ int main(void)
 
               rotate_L90_S();
             }
+            half_sectionD();
 
             drive_disable_motor();
             break;
