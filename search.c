@@ -144,19 +144,19 @@ void searchB_S_conf_route(void) {
         //----右折----
         case 0x44:
 
-            //half_sectionD(); // 半区画分減速しながら走行し停止
-            rotate_R90_S();    // 右回転
+            half_sectionD(); // 半区画分減速しながら走行し停止
+            rotate_R90();    // 右回転
             turn_dir(DIR_TURN_R90); // マイクロマウス内部位置情報でも右回転処理
-            //half_sectionA(); // 半区画分加速しながら走行する
-            get_wall_info();
+            half_sectionA(); // 半区画分加速しながら走行する
+            //get_wall_info();
             break;
         //----180回転----
         case 0x22:
 
             half_sectionD(); // 半区間分減速しながら走行し停止
 
-            if (ad_fr >= WALL_BASE_FR * 1.5 && ad_fl >= WALL_BASE_FL * 1.5 &&
-                ad_r >= WALL_BASE_R * 1.5) { // 前壁と左壁が確実に有る場合
+            if (ad_fr >= WALL_BASE_FR * 2 && ad_fl >= WALL_BASE_FL * 2 &&
+                ad_r >= WALL_BASE_R * 2) { // 前壁と左壁が確実に有る場合
                 rotate_L90();                // 左回転
                 drive_wait(); // 機体が安定するまで待機，drive.h に定義あり
                 set_position(0); // 尻当てをして機体の位置を中央へ，drive.c
@@ -168,8 +168,8 @@ void searchB_S_conf_route(void) {
                                  // で定義されている
                 drive_wait(); // 機体が安定するまで待機
             } else if (
-                ad_fr >= WALL_BASE_FR * 1.5 && ad_fl >= WALL_BASE_FL * 1.5 &&
-                ad_l >= WALL_BASE_L * 1.5) { // それ以外で前壁と右壁が確実に有る場合
+                ad_fr >= WALL_BASE_FR * 2 && ad_fl >= WALL_BASE_FL * 2 &&
+                ad_l >= WALL_BASE_L * 2) { // それ以外で前壁と右壁が確実に有る場合
                 rotate_R90(); // 右回転
                 drive_wait(); // 機体が安定するまで待機，drive.h に定義あり
                 set_position(0); // 尻当てをして機体の位置を中央へ，drive.c
@@ -191,11 +191,11 @@ void searchB_S_conf_route(void) {
         //----左折----
         case 0x11:
 
-            //half_sectionD(); // 半区画分減速しながら走行し停止
+            half_sectionD(); // 半区画分減速しながら走行し停止
             rotate_L90();    // 左回転
             turn_dir(DIR_TURN_L90); // マイクロマウス内部位置情報でも右回転処理
-            //half_sectionA(); // 半区画分加速しながら走行する
-            get_wall_info();
+            half_sectionA(); // 半区画分加速しながら走行する
+            //get_wall_info();
             break;
         }
         adv_pos();
@@ -270,8 +270,8 @@ void searchB_S_fast(void) {
 
             half_sectionD(); // 半区間分減速しながら走行し停止
 
-            if (ad_fr >= WALL_BASE_FR * 10 && ad_fl >= WALL_BASE_FL * 10 &&
-                ad_r >= WALL_BASE_R * 10) { // 前壁と左壁が確実に有る場合
+            if (ad_fr >= WALL_BASE_FR * 2 && ad_fl >= WALL_BASE_FL * 2 &&
+                ad_r >= WALL_BASE_R * 2) { // 前壁と左壁が確実に有る場合
                 rotate_L90();                // 左回転
                 drive_wait(); // 機体が安定するまで待機，drive.h に定義あり
                 set_position(0); // 尻当てをして機体の位置を中央へ，drive.c
@@ -283,8 +283,8 @@ void searchB_S_fast(void) {
                                  // で定義されている
                 drive_wait(); // 機体が安定するまで待機
             } else if (
-                ad_fr >= WALL_BASE_FR * 10 && ad_fl >= WALL_BASE_FL * 10 &&
-                ad_l >= WALL_BASE_L * 10) { // それ以外で前壁と右壁が確実に有る場合
+                ad_fr >= WALL_BASE_FR * 2 && ad_fl >= WALL_BASE_FL * 2 &&
+                ad_l >= WALL_BASE_L * 2) { // それ以外で前壁と右壁が確実に有る場合
                 rotate_R90(); // 右回転
                 drive_wait(); // 機体が安定するまで待機，drive.h に定義あり
                 set_position(0); // 尻当てをして機体の位置を中央へ，drive.c
