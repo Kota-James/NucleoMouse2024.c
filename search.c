@@ -168,7 +168,7 @@ void searchB(void) {
                 drive_wait(); // 機体が安定するまで待機
             } else if (
                 ad_fr >= WALL_BASE_FR * 1.5 && ad_fl >= WALL_BASE_FL * 1.5 &&
-                ad_l >= WALL_BASE_L) { // それ以外で前壁と右壁が確実に有る場合
+                ad_l >= WALL_BASE_L * 1.5) { // それ以外で前壁と右壁が確実に有る場合
                 rotate_R90(); // 右回転
                 drive_wait(); // 機体が安定するまで待機，drive.h に定義あり
                 set_position(0); // 尻当てをして機体の位置を中央へ，drive.c
@@ -204,7 +204,122 @@ void searchB(void) {
 
     half_sectionD(); // 半区画分減速しながら走行し停止
 
-    HAL_Delay(2);  //スタートでは***2秒以上***停止しなくてはならない
+    HAL_Delay(2200);  //スタートでは***2秒以上***停止しなくてはならない
+    rotate_180(); // 180度回転
+    turn_dir(DIR_TURN_180); // マイクロマウス内部位置情報でも180度回転処理
+
+    if (!MF.FLAG.SCND) {
+        store_map_in_eeprom(); // 一次探索走行時はROMにマップ情報を書き込む
+    }
+}
+
+
+/*-----------------------------------------------------------
+    スラローム足立法探索走行B_S（連続走行）
+-----------------------------------------------------------*/
+//+++++++++++++++++++++++++++++++++++++++++++++++
+// searchB_S
+// 連続走行でgoal座標に進む
+// 引数：なし
+// 戻り値：なし
+//+++++++++++++++++++++++++++++++++++++++++++++++
+void searchB_S(void) {
+    if (MF.FLAG.SCND) {
+        load_map_from_eeprom(); // 二次走行時はROMからマップ情報を取り出す
+    }
+
+    //====スタート位置壁情報取得====
+    get_wall_info();    // 壁情報の初期化, 後壁はなくなる
+    wall_info &= ~0x88; // 前壁は存在するはずがないので削除する
+    write_map();        // 壁情報を地図に記入
+
+    //====前に壁が無い想定で問答無用で前進====
+    half_sectionA();
+    adv_pos();
+    write_map();
+
+    //====歩数マップ・経路作成====
+    r_cnt = 0;   // 経路カウンタの初期化
+    make_smap(); // 歩数マップ作成
+    make_route(); // 最短経路探索（route配列に動作が格納される）
+
+    //====探索走行====
+    do {
+        //----進行----
+        switch (
+            route
+                [r_cnt++]) { // route配列によって進行を決定。経路カウンタを進める
+
+        //----前進----
+        case 0x88:
+            one_sectionU();
+            break;
+        //----右折----
+        case 0x44:
+
+            //half_sectionD(); // 半区画分減速しながら走行し停止
+            rotate_R90_S();    // 右回転
+            turn_dir(DIR_TURN_R90); // マイクロマウス内部位置情報でも右回転処理
+            //half_sectionA(); // 半区画分加速しながら走行する
+            get_wall_info();
+            break;
+        //----180回転----
+        case 0x22:
+
+            half_sectionD(); // 半区間分減速しながら走行し停止
+
+            if (ad_fr >= WALL_BASE_FR * 10 && ad_fl >= WALL_BASE_FL * 10 &&
+                ad_r >= WALL_BASE_R * 10) { // 前壁と左壁が確実に有る場合
+                rotate_L90();                // 左回転
+                drive_wait(); // 機体が安定するまで待機，drive.h に定義あり
+                set_position(0); // 尻当てをして機体の位置を中央へ，drive.c
+                                 // で定義されている
+                drive_wait(); // 機体が安定するまで待機
+                rotate_L90(); // 左回転
+                drive_wait(); // 機体が安定するまで待機，drive.h に定義あり
+                set_position(0); // 尻当てをして機体の位置を中央へ，drive.c
+                                 // で定義されている
+                drive_wait(); // 機体が安定するまで待機
+            } else if (
+                ad_fr >= WALL_BASE_FR * 10 && ad_fl >= WALL_BASE_FL * 10 &&
+                ad_l >= WALL_BASE_L * 10) { // それ以外で前壁と右壁が確実に有る場合
+                rotate_R90(); // 右回転
+                drive_wait(); // 機体が安定するまで待機，drive.h に定義あり
+                set_position(0); // 尻当てをして機体の位置を中央へ，drive.c
+                                 // で定義されている
+                drive_wait(); // 機体が安定するまで待機
+                rotate_R90(); // 右回転
+                drive_wait(); // 機体が安定するまで待機，drive.h に定義あり
+                set_position(0); // 尻当てをして機体の位置を中央へ，drive.c
+                                 // で定義されている
+                drive_wait(); // 機体が安定するまで待機
+            } else {
+                rotate_180(); // 180度回転
+            }
+
+            turn_dir(
+                DIR_TURN_180); // マイクロマウス内部位置情報でも180度回転処理
+            half_sectionA(); // 半区画分加速しながら走行する
+            break;
+        //----左折----
+        case 0x11:
+
+            //half_sectionD(); // 半区画分減速しながら走行し停止
+            rotate_L90_S();    // 左回転
+            turn_dir(DIR_TURN_L90); // マイクロマウス内部位置情報でも右回転処理
+            //half_sectionA(); // 半区画分加速しながら走行する
+            get_wall_info();
+            break;
+        }
+        adv_pos();
+        //conf_route();
+
+    } while ((mouse.x != goal_x) ||
+             (mouse.y != goal_y)); // 現在座標とgoal座標が等しくなるまで実行
+
+    half_sectionD(); // 半区画分減速しながら走行し停止
+
+    HAL_Delay(2200);  //スタートでは***2秒以上***停止しなくてはならない
     rotate_180(); // 180度回転
     turn_dir(DIR_TURN_180); // マイクロマウス内部位置情報でも180度回転処理
 
