@@ -62,6 +62,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
         else if(MF.FLAG.ROTATER){
             __HAL_TIM_SET_AUTORELOAD(&htim16, ARR_OUT);
         }
+        else if(MF.FLAG.DRIVEU2){
+          ;
+        }
 
         //----それ以外の時はテーブルカウンタの指し示すインターバル----
         else {
@@ -102,6 +105,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
         else if(MF.FLAG.ROTATER){
             __HAL_TIM_SET_AUTORELOAD(&htim17, ARR_IN);
+        }
+        else if(MF.FLAG.DRIVEU2){
+          ;
         }
 
         //----それ以外の時はテーブルカウンタの指し示すインターバル----

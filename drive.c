@@ -120,12 +120,16 @@ void rotate_L90(void){
 void rotate_L90_S(void){
 
   MF.FLAG.CTRL = 0;                   //制御無効
-  MF.FLAG.ROTATER = 1;
   drive_set_dir(FORWARD);            //右に旋回するようモータの回転方向を設定
   //drive_wait();                       //機体が安定するまで待機
-  driveR(PULSE_ROT_OUT, PULSE_ROT_IN);              //デフォルトインターバルで指定パルス分回転。回転後に停止する
-  //HAL_Delay(10);                       //機体が安定するまで待機
+  driveU2(PULSE_OFFSET, ARR_OFFSET);    //  オフセット区間
+
+  MF.FLAG.ROTATER = 1;
+  driveR(PULSE_ROT_OUT, PULSE_ROT_IN);      //デフォルトインターバルで指定パルス分回転。回転後に停止する
   MF.FLAG.ROTATER = 0;
+
+  driveU2(PULSE_OFFSET, ARR_OFFSET);    //  オフセット区間
+  //HAL_Delay(10);                       //機体が安定するまで待機
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++
@@ -139,12 +143,16 @@ void rotate_L90_S(void){
 void rotate_R90_S(void){
 
   MF.FLAG.CTRL = 0;                   //制御を無効にする
-  MF.FLAG.ROTATEL = 1;
   drive_set_dir(FORWARD);            //左に旋回するようモータの回転方向を設定
   //drive_wait();                       //機体が安定するまで待機
-  driveR(PULSE_ROT_IN, PULSE_ROT_OUT);              //デフォルトインターバルで指定パルス分回転。回転後に停止する
-  //HAL_Delay(10);                       //機体が安定するまで待機
+  driveU2(PULSE_OFFSET, ARR_OFFSET);    //  オフセット区間
+
+  MF.FLAG.ROTATEL = 1;
+  driveR(PULSE_ROT_IN, PULSE_ROT_OUT);      //デフォルトインターバルで指定パルス分回転。回転後に停止する
   MF.FLAG.ROTATEL = 0;
+
+  driveU2(PULSE_OFFSET, ARR_OFFSET);    //  オフセット区間
+  //HAL_Delay(10);                       //機体が安定するまで待機
 }
 
 
@@ -272,14 +280,41 @@ void driveU(uint16_t dist){
   MF.FLAG.ROTATER = 0;
   drive_start();                      //走行開始
 
-  t_cnt_l = 218;
-  t_cnt_l = 218;
   //====走行====
   while((pulse_l < dist) || (pulse_r < dist));      //左右のモータが減速分のパルス以上進むまで待機
 
   //====走行終了====
   drive_stop();
 }
+
+//+++++++++++++++++++++++++++++++++++++++++++++++
+//driveU2
+// 指定パルス分等速走行して停止する
+// 引数1：dist …… 走行するパルス
+// 戻り値：なし
+//+++++++++++++++++++++++++++++++++++++++++++++++
+void driveU2(uint16_t dist, uint16_t ARR){
+  //====等速走行開始====
+  MF.FLAG.DECL = 0;
+  MF.FLAG.DEF = 0;
+  MF.FLAG.ACCL = 0;                   //加速・減速・デフォルトインターバルフラグをクリア
+  MF.FLAG.ROTATEL = 0;
+  MF.FLAG.ROTATER = 0;
+  MF.FLAG.DRIVEU2 = 1;
+
+  __HAL_TIM_SET_AUTORELOAD(&htim16, ARR);
+  __HAL_TIM_SET_AUTORELOAD(&htim17, ARR);
+
+  drive_start();                      //走行開始
+
+  //====走行====
+  while((pulse_l < dist) || (pulse_r < dist));      //左右のモータが減速分のパルス以上進むまで待機
+
+  //====走行終了====
+  drive_stop();
+  MF.FLAG.DRIVEU2 = 0;
+}
+
 
 //+++++++++++++++++++++++++++++++++++++++++++++++
 //driveC
