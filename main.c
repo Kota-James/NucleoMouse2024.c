@@ -239,6 +239,7 @@ int main(void)
               one_sectionU();     //1区画のパルス分等速で走行
               driveD(PULSE_SEC_HALF);       //半区画のパルス分減速しながら走行。走行後は停止する
 
+              HAL_Delay(500);
               rotate_L90_S();
             }
             half_sectionD();
@@ -250,6 +251,13 @@ int main(void)
             //==== empty mode ====
 
             printf("Mode 4: .\n");
+
+            drive_enable_motor();
+
+            driveU2(40, DEFAULT_INTERVAL*2);
+            drive_wait();
+
+            drive_disable_motor();
             break;
 
         case 5:

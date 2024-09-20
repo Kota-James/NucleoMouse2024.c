@@ -123,7 +123,7 @@ void rotate_L90_S(void){
   drive_set_dir(FORWARD);            //右に旋回するようモータの回転方向を設定
   //drive_wait();                       //機体が安定するまで待機
   driveU2(PULSE_OFFSET, ARR_OFFSET);    //  オフセット区間
-
+  HAL_Delay(500);
   MF.FLAG.ROTATER = 1;
   driveR(PULSE_ROT_OUT, PULSE_ROT_IN);      //デフォルトインターバルで指定パルス分回転。回転後に停止する
   MF.FLAG.ROTATER = 0;
