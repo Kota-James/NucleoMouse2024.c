@@ -197,7 +197,7 @@ int main(void)
 
             get_base();
 
-            searchB();
+            searchB_S();
             HAL_Delay(500);
 
             goal_x = goal_y = 0;

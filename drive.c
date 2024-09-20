@@ -124,7 +124,7 @@ void rotate_L90_S(void){
   drive_set_dir(FORWARD);            //右に旋回するようモータの回転方向を設定
   //drive_wait();                       //機体が安定するまで待機
   driveR(PULSE_ROT_OUT, PULSE_ROT_IN);              //デフォルトインターバルで指定パルス分回転。回転後に停止する
-  //drive_wait();                       //機体が安定するまで待機
+  //HAL_Delay(10);                       //機体が安定するまで待機
   MF.FLAG.ROTATER = 0;
 }
 
@@ -143,7 +143,7 @@ void rotate_R90_S(void){
   drive_set_dir(FORWARD);            //左に旋回するようモータの回転方向を設定
   //drive_wait();                       //機体が安定するまで待機
   driveR(PULSE_ROT_IN, PULSE_ROT_OUT);              //デフォルトインターバルで指定パルス分回転。回転後に停止する
-  //drive_wait();                       //機体が安定するまで待機
+  //HAL_Delay(10);                       //機体が安定するまで待機
   MF.FLAG.ROTATEL = 0;
 }
 
@@ -264,7 +264,6 @@ void driveD(uint16_t dist){
 // 戻り値：なし
 //+++++++++++++++++++++++++++++++++++++++++++++++
 void driveU(uint16_t dist){
-
   //====等速走行開始====
   MF.FLAG.DECL = 0;
   MF.FLAG.DEF = 0;
@@ -273,6 +272,8 @@ void driveU(uint16_t dist){
   MF.FLAG.ROTATER = 0;
   drive_start();                      //走行開始
 
+  t_cnt_l = 218;
+  t_cnt_l = 218;
   //====走行====
   while((pulse_l < dist) || (pulse_r < dist));      //左右のモータが減速分のパルス以上進むまで待機
 
