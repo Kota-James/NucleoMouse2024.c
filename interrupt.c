@@ -180,23 +180,23 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                 dif_r = (int32_t)ad_r - base_r;
 
                 if(ad_l >= WALL_BASE_L && ad_r >= WALL_BASE_R){     //左右に壁がある時
-                    if(dif_l > CTRL_BASE_L){            //左壁の制御判断
+                    if(dif_l > CTRL_BASE_L || -1* dif_l > CTRL_BASE_L){            //左壁の制御判断 abs(dif_l) > CTRL_BASE_Lに等しい
                         dl_tmp += -1 * CTRL_CONT * dif_l;   //比例制御値を決定
                         dr_tmp += CTRL_CONT * dif_l;        //比例制御値を決定
                     }
-                    if(dif_r > CTRL_BASE_R){
+                    if(dif_r > CTRL_BASE_R || -1 * dif_r > CTRL_BASE_R){
                         dl_tmp += CTRL_CONT * dif_r;   //比例制御値を決定
                         dr_tmp += -1 * CTRL_CONT * dif_r;        //比例制御値を決定
                     }
                 }
                 else if(ad_l >= WALL_BASE_L){           //左壁だけあるとき
-                    if(dif_l > CTRL_BASE_L){
+                    if(dif_l > CTRL_BASE_L || -1 * dif_l > CTRL_BASE_L){
                         dl_tmp += -2 * CTRL_CONT * dif_l;       //比例制御値を決定  制御量を倍に
                         dr_tmp += 2 * CTRL_CONT * dif_l;        //比例制御値を決定  制御量を倍に
                     }
                 }
                 else if(ad_r >= WALL_BASE_R){           //右壁だけある時
-                    if(dif_r > CTRL_BASE_R){
+                    if(dif_r > CTRL_BASE_R || -1 * dif_r > CTRL_BASE_R){
                         dl_tmp += 2 * CTRL_CONT * dif_r;       //比例制御値を決定  制御量を倍に
                         dr_tmp += -2 * CTRL_CONT * dif_r;        //比例制御値を決定  制御量を倍に
                     }
