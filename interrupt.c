@@ -179,14 +179,40 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                 dif_l = (int32_t)ad_l - base_l;
                 dif_r = (int32_t)ad_r - base_r;
 
-                if (CTRL_BASE_L < dif_l) {            // 制御の判断
+                if(ad_l >= WALL_BASE_L && ad_r >= WALL_BASE_R){     //左右に壁がある時
+                    if(dif_l > CTRL_BASE_L){            //左壁の制御判断
+                        dl_tmp += -1 * CTRL_CONT * dif_l;   //比例制御値を決定
+                        dr_tmp += CTRL_CONT * dif_l;        //比例制御値を決定
+                    }
+                    if(dif_r > CTRL_BASE_R){
+                        dl_tmp += CTRL_CONT * dif_r;   //比例制御値を決定
+                        dr_tmp += -1 * CTRL_CONT * dif_r;        //比例制御値を決定
+                    }
+                }
+                else if(ad_l >= WALL_BASE_L){           //左壁だけあるとき
+                    if(dif_l > CTRL_BASE_L){
+                        dl_tmp += -2 * CTRL_CONT * dif_l;       //比例制御値を決定  制御量を倍に
+                        dr_tmp += 2 * CTRL_CONT * dif_l;        //比例制御値を決定  制御量を倍に
+                    }
+                }
+                else if(ad_r >= WALL_BASE_R){           //右壁だけある時
+                    if(dif_r > CTRL_BASE_R){
+                        dl_tmp += 2 * CTRL_CONT * dif_r;       //比例制御値を決定  制御量を倍に
+                        dr_tmp += -2 * CTRL_CONT * dif_r;        //比例制御値を決定  制御量を倍に
+                    }
+                }
+                else{                             //壁がない時b
+                  ;
+                }
+
+                /*if (CTRL_BASE_L < dif_l) {            // 制御の判断
                     dl_tmp += -1 * CTRL_CONT * dif_l; // 比例制御値を決定
                     dr_tmp += CTRL_CONT * dif_l; // 比例制御値を決定
                 }
                 if (CTRL_BASE_R < dif_r) {
                     dl_tmp += CTRL_CONT * dif_r; // 比例制御値を決定
                     dr_tmp += -1 * CTRL_CONT * dif_r; // 比例制御値を決定
-                }
+                }*/
 
                 // 一次保存した制御比例値をdlとdrに反映させる
                 dl = max(min(CTRL_MAX, dl_tmp), -1 * CTRL_MAX);
