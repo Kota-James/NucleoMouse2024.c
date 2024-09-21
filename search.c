@@ -258,7 +258,7 @@ void searchB_S_conf_route(void) {
         //----右折----
         case 0x44:
 
-            rotate_R90();    // 右回転
+            rotate_R90_S();    // 右回転
             turn_dir(DIR_TURN_R90); // マイクロマウス内部位置情報でも右回転処理
             get_wall_info();
             break;
@@ -303,7 +303,7 @@ void searchB_S_conf_route(void) {
         //----左折----
         case 0x11:
 
-            rotate_L90();    // 左回転
+            rotate_L90_S();    // 左回転
             turn_dir(DIR_TURN_L90); // マイクロマウス内部位置情報でも右回転処理
             get_wall_info();
             break;
