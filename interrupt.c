@@ -8,6 +8,8 @@
 #include "global.h"
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+  uint32_t pre_ad_l, pre_ad_r;              //前回のセンサ値を格納
+  int32_t change_value_l, change_value_r;   //前回のセンサ値との差を入れる変数
 
     /*==========================================================
         走行用タイマ割り込み
