@@ -8,7 +8,7 @@
 #include "global.h"
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-  uint32_t pre_ad_l, pre_ad_r;              //前回のセンサ値を格納
+  static uint32_t pre_ad_l = 0, pre_ad_r = 0;        //前回のセンサ値を格納　静的変数として宣言し、0で初期化
   int32_t change_value_l, change_value_r;   //前回のセンサ値との差を入れる変数
 
     /*==========================================================
