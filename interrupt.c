@@ -190,7 +190,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
                 if(change_value_l > RAPID_CHANGE || -1 * change_value_l > RAPID_CHANGE){      //左壁のセンサ値が急激に変化したとき
                     wall_base_l = WALL_BASE_L * 3;    //壁有判断の閾値を上げる
-                    ctrl_base_l = CTRL_BASE_L * 2;    //制御の条件を上げる
+                    ctrl_base_l = CTRL_BASE_L * 3;    //制御の条件を上げる
                 }else{
                     wall_base_l = WALL_BASE_L;         //壁有判断の閾値は基準値
                     ctrl_base_l = CTRL_BASE_L;          //制御の条件は基準通り
@@ -198,13 +198,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
                 if(change_value_r > RAPID_CHANGE || -1 * change_value_r > RAPID_CHANGE){      //右壁のセンサ値が急激に変化したとき
                     wall_base_r = WALL_BASE_R * 3;    //壁有判断の閾値を上げる
-                    ctrl_base_r = CTRL_BASE_R * 2;    //制御の条件を上げる
+                    ctrl_base_r = CTRL_BASE_R * 3;    //制御の条件を上げる
                 }else{
                     wall_base_r = WALL_BASE_R;         //壁有判断の閾値は基準値
                     ctrl_base_r = CTRL_BASE_R;          //制御の条件は基準通り
                 }
 
 
+                //横壁制御
                 if(ad_l >= wall_base_l && ad_r >= wall_base_r){     //左右に壁がある時
                     if(dif_l > ctrl_base_l || -1* dif_l > ctrl_base_l){            //左壁の制御判断 abs(dif_l) > CTRL_BASE_Lに等しい
                         dl_tmp += -1 * CTRL_CONT * dif_l;   //比例制御値を決定
