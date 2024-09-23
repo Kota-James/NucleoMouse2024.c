@@ -165,11 +165,11 @@ int main(void)
 
             get_base();   //get base value to wall control
 
-            searchB();    //Search run from the current location as the starting point to the goal coordinates
+            searchB_S_conf_route();    //Search run from the current location as the starting point to the goal coordinates
             HAL_Delay(100);
 
             goal_x = goal_y = 0;    //Set the goal coordinates as the starting point
-            searchB();    //Return to starting point while exploring
+            searchB_S_conf_route();    //Return to starting point while exploring
 
             goal_x = GOAL_X;
             goal_y = GOAL_Y;    //Set goal coordinates
@@ -235,8 +235,11 @@ int main(void)
             driveC(PULSE_SEC_HALF);     //半区画のパルス分デフォルトインターバルで走行
 
             for(int i = 0; i < 16; i++){
+              MF.FLAG.CTRL = 0;
               driveA(PULSE_SEC_HALF);       //半区画のパルス分加速しながら走行
+              MF.FLAG.CTRL = 1;
               one_sectionU();     //1区画のパルス分等速で走行
+              MF.FLAG.CTRL = 0;
               driveD(PULSE_SEC_HALF);       //半区画のパルス分減速しながら走行。走行後は停止する
 
               //HAL_Delay(500);

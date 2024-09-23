@@ -153,7 +153,7 @@ void rotate_R90_S(void){
   drive_set_dir(FORWARD);            //左に旋回するようモータの回転方向を設定
 
 
-  if(ad_fl >= WALL_BASE_FL * 2 && ad_fr >= WALL_BASE_FR * 2){       //前壁が確実にある時b
+  if(ad_fl >= WALL_BASE_FL * 2 && ad_fr >= WALL_BASE_FR * 2){       //前壁が確実にある時
       while(ad_fl < ROT_START_FL && ad_fr < ROT_START_FR){          //センサ値が基準値に達するまで
           driveU2(1, ARR_OFFSET);         //1パルス分だけ進む
       }
