@@ -367,14 +367,14 @@ void searchB_S_fast(void) {
             uint8_t r_cnt_temp = 1;
 
 
-            while(route[r_cnt_temp + 1] == 0x88){   //  次も直進ならr_cnt_tempをインクリメント
+            while((route[r_cnt + r_cnt_temp] == 0x88)){   //  次も直進ならr_cnt_tempをインクリメント
                 r_cnt_temp++;
             }
 
-            if((r_cnt_temp = 1)){
+            if((r_cnt_temp == 1)){
                 one_section();
             }
-            else if(r_cnt_temp <= 3){
+            else if(r_cnt_temp <= 3){     //１区画加速
                 min_t_cnt = 250;
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 2;
                 MF.FLAG.CTRL = 1;
@@ -382,7 +382,7 @@ void searchB_S_fast(void) {
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 2));
                 driveD(PULSE_SEC_HALF * 2);
             }
-            else if(r_cnt_temp <= 5){
+            else if(r_cnt_temp <= 5){     //２区画加速
                 min_t_cnt = 250;
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 4;
                 MF.FLAG.CTRL = 1;
@@ -390,14 +390,14 @@ void searchB_S_fast(void) {
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 4));
                 driveD(PULSE_SEC_HALF * 4);
             }
-            else if(r_cnt_temp <= 7){
+            else if(r_cnt_temp <= 7){     //３区画加速
                 min_t_cnt = 250;
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 6;
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 6);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 6));
                 driveD(PULSE_SEC_HALF * 6);
-            }else{
+            }else{                        //４区画加速
                 min_t_cnt = 250;
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 8;
                 MF.FLAG.CTRL = 1;
@@ -406,7 +406,13 @@ void searchB_S_fast(void) {
                 driveD(PULSE_SEC_HALF * 8);
             }
 
+            get_wall_info();
+
             r_cnt += r_cnt_temp - 1;
+
+            for(int i = 1; i < r_cnt_temp; i++){        //内部情報を更新
+                adv_pos();
+            }
 
             //one_sectionU();
             break;
