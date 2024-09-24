@@ -44,7 +44,7 @@ int select_mode(int mode) {
     printf("Mode : %d\n", mode);
 
     while (1) {
-        led_write(mode & 0b001, mode & 0b010, mode & 0b100);
+        //led_write(mode & 0b001, mode & 0b010, mode & 0b100);
         if (HAL_GPIO_ReadPin(SW1_GPIO_Port, SW1_Pin) == GPIO_PIN_RESET) {
             HAL_Delay(100);
             while (HAL_GPIO_ReadPin(SW1_GPIO_Port, SW1_Pin) == GPIO_PIN_RESET)
