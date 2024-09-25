@@ -365,6 +365,7 @@ void searchB_S_fast(void) {
 
         //----前進----
         case 0x88:
+          min_t_cnt = 250;
           if(MF.FLAG.SCND){
             uint8_t r_cnt_temp = 1;
 
@@ -376,34 +377,38 @@ void searchB_S_fast(void) {
                 one_section();
             }
             else if(r_cnt_temp <= 3){     //１区画加速
-                min_t_cnt = 250;
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 2;
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 2);
+                //MF.FLAG.CTRL = 0;
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 2));
+                //MF.FLAG.CTRL = 1;
                 driveD(PULSE_SEC_HALF * 2);
             }
             else if(r_cnt_temp <= 5){     //２区画加速
-                min_t_cnt = 250;
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 4;
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 4);
+                //MF.FLAG.CTRL = 0;
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 4));
+                //MF.FLAG.CTRL = 1;
                 driveD(PULSE_SEC_HALF * 4);
             }
             else if(r_cnt_temp <= 7){     //３区画加速
-                min_t_cnt = 250;
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 6;
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 6);
+                //MF.FLAG.CTRL = 0;
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 6));
+                //MF.FLAG.CTRL = 1;
                 driveD(PULSE_SEC_HALF * 6);
             }else{                        //４区画加速
-                min_t_cnt = 250;
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 8;
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 8);
+                //MF.FLAG.CTRL = 0;
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 8));
+                //MF.FLAG.CTRL = 1;
                 driveD(PULSE_SEC_HALF * 8);
             }
 
