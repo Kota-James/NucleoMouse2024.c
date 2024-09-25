@@ -119,7 +119,7 @@ void rotate_L90(void){
 //+++++++++++++++++++++++++++++++++++++++++++++++
 void rotate_L90_S(void){
 
-  MF.FLAG.CTRL = 0;                   //制御無効
+  MF.FLAG.CTRL = 1;                   //制御無効
   drive_set_dir(FORWARD);            //右に旋回するようモータの回転方向を設定
 
 
@@ -136,6 +136,7 @@ void rotate_L90_S(void){
   driveR(PULSE_ROT_OUT, PULSE_ROT_IN);      //デフォルトインターバルで指定パルス分回転。回転後に停止する
   MF.FLAG.ROTATER = 0;
 
+  MF.FLAG.CTRL = 1;
   driveU2(PULSE_OFFSET, ARR_OFFSET);    //  オフセット区間
 }
 
@@ -149,7 +150,7 @@ void rotate_L90_S(void){
 //+++++++++++++++++++++++++++++++++++++++++++++++
 void rotate_R90_S(void){
 
-  MF.FLAG.CTRL = 0;                   //制御を無効にする
+  MF.FLAG.CTRL = 1;                   //制御を無効にする
   drive_set_dir(FORWARD);            //左に旋回するようモータの回転方向を設定
 
 
@@ -166,6 +167,7 @@ void rotate_R90_S(void){
   driveR(PULSE_ROT_IN, PULSE_ROT_OUT);      //デフォルトインターバルで指定パルス分回転。回転後に停止する
   MF.FLAG.ROTATEL = 0;
 
+  MF.FLAG.CTRL = 1;
   driveU2(PULSE_OFFSET, ARR_OFFSET);    //  オフセット区間
 }
 
@@ -365,6 +367,7 @@ void driveR(uint16_t dist_l, uint16_t dist_r){
   MF.FLAG.DECL = 0;
   MF.FLAG.DEF = 0;
   MF.FLAG.ACCL = 0;                   //加速・減速フラグをクリア，デフォルトインターバルフラグをセット
+  MF.FLAG.CTRL = 0;
   drive_start();                      //走行開始
 
   //====回転====

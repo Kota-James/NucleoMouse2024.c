@@ -208,8 +208,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
             // 制御フラグがあれば制御
             if (MF.FLAG.CTRL) {
                 // 比例制御値を一次保存する変数を宣言し0で初期化
-                dl_tmp = 0;
-                dr_tmp = 0;
+                int16_t dl_tmp = 0, dr_tmp = 0;
                 uint16_t wall_base_l, wall_base_r;
                 uint16_t ctrl_base_l, ctrl_base_r;
                 // 基準値からの差を見る
