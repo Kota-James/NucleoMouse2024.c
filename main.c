@@ -169,7 +169,7 @@ int main(void)
             goal_y = GOAL_Y;    //Set goal coordinates
             drive_disable_motor();    //Stop excitation of stepping motor
 
-            mode++;
+
             break;
 
         case 2:
@@ -213,6 +213,7 @@ int main(void)
             //butt_adjust();
             //get_base();
             min_t_cnt = 250;
+            ctrl_amount = 0.8;
             searchB_S_go();
             HAL_Delay(100);
 

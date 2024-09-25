@@ -556,6 +556,22 @@ void butt_adjust(void){
   drive_wait();   //wait until the machine stabilizes
 }
 
+//+++++++++++++++++++++++++++++++++++++++++++++++
+//butt_adjust
+//  尻当て調整
+//  引数：なし
+//  戻り値：なし
+//+++++++++++++++++++++++++++++++++++++++++++++++
+void butt_adjust_LL(void){
+  rotate_L90();   //rotate 90 degrees to the right. it is defined in drive.c
+  drive_wait();   //Wait until the aircraft stabilizes. it is defined in drive.h
+  set_position(0);    //Center the aircraft position with the butt rest. it is defined in drive.c
+  drive_wait();   //wait until the machine stabilizes
+  rotate_L90();   //rotate 90 degrees to the left. it is defined in drive.c
+  drive_wait();   //wait until the machine stabilizes
+  set_position(0);    //center the machine position with the butt rest.
+  drive_wait();   //wait until the machine stabilizes
+}
 
 //+++++++++++++++++++++++++++++++++++++++++++++++
 //test_run

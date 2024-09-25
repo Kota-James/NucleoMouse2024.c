@@ -22,17 +22,17 @@ void interrupt_init(void){
 
   //====制御系の変数の初期化====
   //マクロ定義されている値を代入
-  dl_tmp = 0;
-  dr_tmp = 0;
+  //dl_tmp = 0;
+  //dr_tmp = 0;
 
-  wall_base_l = WALL_BASE_L;
-  wall_base_r = WALL_BASE_R;
-  ctrl_base_l = CTRL_BASE_L;
-  ctrl_base_r = CTRL_BASE_R;
+  //wall_base_l = WALL_BASE_L;
+  //wall_base_r = WALL_BASE_R;
+  //ctrl_base_l = CTRL_BASE_L;
+  //ctrl_base_r = CTRL_BASE_R;
 
-  ctrl_max = CTRL_MAX;
-  ctrl_p = CTRL_P;
-  ctrl_d = CTRL_D;
+  //ctrl_max = CTRL_MAX;
+  //ctrl_p = CTRL_P;
+  //ctrl_d = CTRL_D;
   ctrl_amount = CTRL_AMOUNT;
 }
 
@@ -210,8 +210,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                 // 比例制御値を一次保存する変数を宣言し0で初期化
                 dl_tmp = 0;
                 dr_tmp = 0;
-                //uint16_t wall_base_l, wall_base_r;
-                //uint16_t ctrl_base_l, ctrl_base_r;
+                uint16_t wall_base_l, wall_base_r;
+                uint16_t ctrl_base_l, ctrl_base_r;
                 // 基準値からの差を見る
                 dif_l = (int32_t)ad_l - base_l;
                 dif_r = (int32_t)ad_r - base_r;
@@ -222,21 +222,19 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                 change_value_r = ad_r - pre_ad_r;     //前回のセンサ値との差
 
                 if(change_value_l > RAPID_CHANGE || -1 * change_value_l > RAPID_CHANGE){      //左壁のセンサ値が急激に変化したとき
-                    wall_base_l *= 20;    //壁有判断の閾値を上げる
-                    ctrl_base_l *= 3;    //制御の条件を上げる
+                    wall_base_l = WALL_BASE_L * 20;    //壁有判断の閾値を上げる
+                    ctrl_base_l = WALL_BASE_L * 3;    //制御の条件を上げる
                 }else{
-                  ;
-                    //wall_base_l = WALL_BASE_L;         //壁有判断の閾値は基準値
-                    //ctrl_base_l = CTRL_BASE_L;          //制御の条件は基準通り
+                    wall_base_l = WALL_BASE_L;         //壁有判断の閾値は基準値
+                    ctrl_base_l = CTRL_BASE_L;          //制御の条件は基準通り
                 }
 
                 if(change_value_r > RAPID_CHANGE || -1 * change_value_r > RAPID_CHANGE){      //右壁のセンサ値が急激に変化したとき
-                    wall_base_r *= 20;    //壁有判断の閾値を上げる
-                    ctrl_base_r *= 3;    //制御の条件を上げる
+                    wall_base_r = WALL_BASE_L * 20;    //壁有判断の閾値を上げる
+                    ctrl_base_r = WALL_BASE_L * 3;    //制御の条件を上げる
                 }else{
-                  ;
-                    //wall_base_r = WALL_BASE_R;         //壁有判断の閾値は基準値
-                    //ctrl_base_r = CTRL_BASE_R;          //制御の条件は基準通り
+                    wall_base_r = WALL_BASE_R;         //壁有判断の閾値は基準値
+                    ctrl_base_r = CTRL_BASE_R;          //制御の条件は基準通り
                 }
 /*
                 if((change_value_l > RAPID_CHANGE || -1 * change_value_l > RAPID_CHANGE) && (change_value_r > RAPID_CHANGE || -1 * change_value_r > RAPID_CHANGE)){
@@ -253,24 +251,24 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                 //横壁制御
                 if(ad_l >= wall_base_l && ad_r >= wall_base_r){     //左右に壁がある時
                     if(dif_l > ctrl_base_l || -1 * dif_l > ctrl_base_l){            //左壁の制御判断 abs(dif_l) > CTRL_BASE_Lに等しい
-                        dl_tmp += (-1 * ctrl_p * dif_l + ctrl_d * change_value_l) * ctrl_amount;   //制御値を決定
-                        dr_tmp += (ctrl_p * dif_l - ctrl_d * change_value_l) * ctrl_amount;        //制御値を決定
+                        dl_tmp += (-1 * CTRL_P * dif_l + CTRL_D * change_value_l);// * ctrl_amount;   //制御値を決定
+                        dr_tmp += (CTRL_P * dif_l - CTRL_D * change_value_l);// * ctrl_amount;        //制御値を決定
                     }
                     if(dif_r > ctrl_base_r || -1 * dif_r > ctrl_base_r){
-                        dl_tmp += (ctrl_p * dif_r - ctrl_d * change_value_r) * ctrl_amount;           //制御値を決定
-                        dr_tmp += (-1 * ctrl_p * dif_r + ctrl_d * change_value_r) * ctrl_amount;      //制御値を決定
+                        dl_tmp += (CTRL_P * dif_r - CTRL_D * change_value_r);// * ctrl_amount;           //制御値を決定
+                        dr_tmp += (-1 * CTRL_P * dif_r + CTRL_D * change_value_r);// * ctrl_amount;      //制御値を決定
                     }
                 }
                 else if(ad_l >= wall_base_l){           //左壁だけあるとき
                     if(dif_l > ctrl_base_l || -1 * dif_l > ctrl_base_l){
-                        dl_tmp += 2 * (-1 * ctrl_p * dif_l + ctrl_d * change_value_l) * ctrl_amount;   //制御値を決定  制御量を倍に
-                        dr_tmp += 2 * (ctrl_p * dif_l - ctrl_d * change_value_l) * ctrl_amount;        //制御値を決定  制御量を倍に
+                        dl_tmp += 2 * (-1 * CTRL_P * dif_l + CTRL_D * change_value_l);// * ctrl_amount;   //制御値を決定  制御量を倍に
+                        dr_tmp += 2 * (CTRL_P * dif_l - CTRL_D * change_value_l);// * ctrl_amount;        //制御値を決定  制御量を倍に
                     }
                 }
                 else if(ad_r >= wall_base_r){           //右壁だけある時
                     if(dif_r > ctrl_base_r || -1 * dif_r > ctrl_base_r){
-                        dl_tmp += 2 * (ctrl_p * dif_r - ctrl_d * change_value_r) * ctrl_amount;         //制御値を決定  制御量を倍に
-                        dr_tmp += 2 * (-1 * ctrl_p * dif_r + ctrl_d * change_value_r) * ctrl_amount;    //制御値を決定  制御量を倍に
+                        dl_tmp += 2 * (CTRL_P * dif_r - CTRL_D * change_value_r);// * ctrl_amount;         //制御値を決定  制御量を倍に
+                        dr_tmp += 2 * (-1 * CTRL_P * dif_r + CTRL_D * change_value_r);// * ctrl_amount;    //制御値を決定  制御量を倍に
                     }
                 }
                 else{                             //壁がない時
@@ -297,8 +295,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                 }
 */
                 // 一次保存した制御比例値をdlとdrに反映させる
-                dl = max(min(ctrl_max * ctrl_amount, dl_tmp), -1 * ctrl_max * ctrl_amount);
-                dr = max(min(ctrl_max * ctrl_amount, dr_tmp), -1 * ctrl_max * ctrl_amount);
+                dl = max(min(CTRL_MAX/* * ctrl_amount*/, dl_tmp), -1 * CTRL_MAX/* * ctrl_amount*/);
+                dr = max(min(CTRL_MAX/* * ctrl_amount*/, dr_tmp), -1 * CTRL_MAX/* * ctrl_amount*/);
 
             } else {
                 // 制御フラグがなければ制御値0

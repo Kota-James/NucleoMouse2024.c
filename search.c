@@ -234,8 +234,8 @@ void searchB_S_go(void) {
     write_map();        // 壁情報を地図に記入
 
     //====前に壁が無い想定で問答無用で前進====
-    driveC(PULSE_SEC_HALF);
-    //half_sectionA();
+    //driveC(PULSE_SEC_HALF);
+    half_sectionA();
     adv_pos();
     write_map();
 
@@ -400,8 +400,8 @@ void searchB_S_back(void) {
     write_map();        // 壁情報を地図に記入
 
     //====前に壁が無い想定で問答無用で前進====
-    driveC(PULSE_SEC_HALF);
-    //half_sectionA();
+    //driveC(PULSE_SEC_HALF);
+    half_sectionA();
     adv_pos();
     write_map();
 
@@ -539,10 +539,10 @@ void searchB_S_back(void) {
       driveC(10);
       //half_sectionD(); // 半区画分減速しながら走行し停止
     }
-    rotate_180(); // 180度回転
+    //rotate_180(); // 180度回転
     turn_dir(DIR_TURN_180); // マイクロマウス内部位置情報でも180度回転処理
 
-    butt_adjust();    //尻当て
+    butt_adjust_LL();    //尻当て
     get_base();
 
     HAL_Delay(2000);  //スタートでは***2秒以上***停止しなくてはならない
