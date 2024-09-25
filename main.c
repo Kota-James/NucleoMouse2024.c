@@ -213,6 +213,19 @@ int main(void)
             //==== empty mode ====
 
             printf("Mode 3: .\n");
+            break;
+
+        case 4:
+            //==== empty mode ====
+
+            printf("Mode 4: .\n");
+            break;
+
+        case 5:
+            //==== empty mode ====
+
+            printf("Mode 5: .\n");
+
             drive_enable_motor();
 
             rotate_R90();
@@ -235,37 +248,19 @@ int main(void)
             driveC(PULSE_SEC_HALF);     //半区画のパルス分デフォルトインターバルで走行
 
             for(int i = 0; i < 16; i++){
-              MF.FLAG.CTRL = 0;
-              driveA(PULSE_SEC_HALF);       //半区画のパルス分加速しながら走行
-              MF.FLAG.CTRL = 1;
-              //one_sectionU();     //1区画のパルス分等速で走行
-              MF.FLAG.CTRL = 0;
-              driveD(PULSE_SEC_HALF);       //半区画のパルス分減速しながら走行。走行後は停止する
-              //HAL_Delay(500);
-              rotate_R90_S();
+                MF.FLAG.CTRL = 0;
+                driveA(PULSE_SEC_HALF);       //半区画のパルス分加速しながら走行
+                MF.FLAG.CTRL = 1;
+                //one_sectionU();     //1区画のパルス分等速で走行
+                MF.FLAG.CTRL = 0;
+                driveD(PULSE_SEC_HALF);       //半区画のパルス分減速しながら走行。走行後は停止する
+                //HAL_Delay(500);
+                rotate_R90_S();
             }
             half_sectionD();
 
             drive_disable_motor();
-            break;
 
-        case 4:
-            //==== empty mode ====
-
-            printf("Mode 4: .\n");
-
-            drive_enable_motor();
-
-            driveU2(40, DEFAULT_INTERVAL*2);
-            drive_wait();
-
-            drive_disable_motor();
-            break;
-
-        case 5:
-            //==== empty mode ====
-
-            printf("Mode 5: .\n");
             break;
 
         case 6:

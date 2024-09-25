@@ -215,10 +215,10 @@ void searchB(void) {
 
 
 /*-----------------------------------------------------------
-    足立法探索走行B（連続走行）最短経路計算あり
+    足立法探索走行B_S_conf_route（連続走行）最短経路計算あり
 -----------------------------------------------------------*/
 //+++++++++++++++++++++++++++++++++++++++++++++++
-// searchB
+// searchB_S_conf_route
 // 連続走行でgoal座標に進む
 // 引数：なし
 // 戻り値：なし
@@ -326,11 +326,12 @@ void searchB_S_conf_route(void) {
 }
 
 
+
 /*-----------------------------------------------------------
-    スラローム足立法探索走行B_S（連続走行）最短経路用
+    スラローム足立法探索走行B_S_fast（連続走行）最短経路用 直線加速有り
 -----------------------------------------------------------*/
 //+++++++++++++++++++++++++++++++++++++++++++++++
-// searchB_S
+// searchB_S_fast
 // 連続走行でgoal座標に進む
 // 引数：なし
 // 戻り値：なし
@@ -380,35 +381,27 @@ void searchB_S_fast(void) {
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 2;
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 2);
-                //MF.FLAG.CTRL = 0;
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 2));
-                //MF.FLAG.CTRL = 1;
                 driveD(PULSE_SEC_HALF * 2);
             }
             else if(r_cnt_temp <= 5){     //２区画加速
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 4;
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 4);
-                //MF.FLAG.CTRL = 0;
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 4));
-                //MF.FLAG.CTRL = 1;
                 driveD(PULSE_SEC_HALF * 4);
             }
             else if(r_cnt_temp <= 7){     //３区画加速
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 6;
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 6);
-                //MF.FLAG.CTRL = 0;
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 6));
-                //MF.FLAG.CTRL = 1;
                 driveD(PULSE_SEC_HALF * 6);
             }else{                        //４区画加速
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 8;
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 8);
-                //MF.FLAG.CTRL = 0;
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 8));
-                //MF.FLAG.CTRL = 1;
                 driveD(PULSE_SEC_HALF * 8);
             }
 

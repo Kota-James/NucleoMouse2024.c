@@ -255,7 +255,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                     dr_tmp += -1 * CTRL_P * dif_r; // 比例制御値を決定
                 }*/
 
-                if((dl_tmp > CTRL_MAX || -1 * dl_tmp > CTRL_MAX) && (dr_tmp > CTRL_MAX || -1 * dr_tmp > CTRL_MAX)){
+/*                if((dl_tmp > CTRL_MAX || -1 * dl_tmp > CTRL_MAX) && (dr_tmp > CTRL_MAX || -1 * dr_tmp > CTRL_MAX)){
                     led_write(1, 0, 1);
                 }else if(dl_tmp > CTRL_MAX || -1 * dl_tmp > CTRL_MAX){
                     led_write(1, 0, 0);
@@ -264,7 +264,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                 }else{
                     led_write(0, 0, 0);
                 }
-
+*/
                 // 一次保存した制御比例値をdlとdrに反映させる
                 dl = max(min(CTRL_MAX, dl_tmp), -1 * CTRL_MAX);
                 dr = max(min(CTRL_MAX, dr_tmp), -1 * CTRL_MAX);
