@@ -253,24 +253,24 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                 //横壁制御
                 if(ad_l >= wall_base_l && ad_r >= wall_base_r){     //左右に壁がある時
                     if(dif_l > ctrl_base_l || -1 * dif_l > ctrl_base_l){            //左壁の制御判断 abs(dif_l) > CTRL_BASE_Lに等しい
-                        dl_tmp += -1 * ctrl_p * dif_l + ctrl_d * change_value_l;   //制御値を決定
-                        dr_tmp += ctrl_p * dif_l - ctrl_d * change_value_l;        //制御値を決定
+                        dl_tmp += (-1 * ctrl_p * dif_l + ctrl_d * change_value_l) * ctrl_amount;   //制御値を決定
+                        dr_tmp += (ctrl_p * dif_l - ctrl_d * change_value_l) * ctrl_amount;        //制御値を決定
                     }
                     if(dif_r > ctrl_base_r || -1 * dif_r > ctrl_base_r){
-                        dl_tmp += ctrl_p * dif_r - ctrl_d * change_value_r;   //制御値を決定
-                        dr_tmp += -1 * ctrl_p * dif_r + ctrl_d * change_value_r;        //制御値を決定
+                        dl_tmp += (ctrl_p * dif_r - ctrl_d * change_value_r) * ctrl_amount;           //制御値を決定
+                        dr_tmp += (-1 * ctrl_p * dif_r + ctrl_d * change_value_r) * ctrl_amount;      //制御値を決定
                     }
                 }
                 else if(ad_l >= wall_base_l){           //左壁だけあるとき
                     if(dif_l > ctrl_base_l || -1 * dif_l > ctrl_base_l){
-                        dl_tmp += -2 * ctrl_p * dif_l + 2 * ctrl_d * change_value_l;       //制御値を決定  制御量を倍に
-                        dr_tmp += 2 * ctrl_p * dif_l - 2 * ctrl_d * change_value_l;        //制御値を決定  制御量を倍に
+                        dl_tmp += 2 * (-1 * ctrl_p * dif_l + ctrl_d * change_value_l) * ctrl_amount;   //制御値を決定  制御量を倍に
+                        dr_tmp += 2 * (ctrl_p * dif_l - ctrl_d * change_value_l) * ctrl_amount;        //制御値を決定  制御量を倍に
                     }
                 }
                 else if(ad_r >= wall_base_r){           //右壁だけある時
                     if(dif_r > ctrl_base_r || -1 * dif_r > ctrl_base_r){
-                        dl_tmp += 2 * ctrl_p * dif_r - 2 * ctrl_d * change_value_r;       //制御値を決定  制御量を倍に
-                        dr_tmp += -2 * ctrl_p * dif_r + 2 * ctrl_d * change_value_r;        //制御値を決定  制御量を倍に
+                        dl_tmp += 2 * (ctrl_p * dif_r - ctrl_d * change_value_r) * ctrl_amount;         //制御値を決定  制御量を倍に
+                        dr_tmp += 2 * (-1 * ctrl_p * dif_r + ctrl_d * change_value_r) * ctrl_amount;    //制御値を決定  制御量を倍に
                     }
                 }
                 else{                             //壁がない時
@@ -297,8 +297,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                 }
 */
                 // 一次保存した制御比例値をdlとdrに反映させる
-                dl = max(min(ctrl_max, dl_tmp), -1 * ctrl_max);
-                dr = max(min(ctrl_max, dr_tmp), -1 * ctrl_max);
+                dl = max(min(ctrl_max * ctrl_amount, dl_tmp), -1 * ctrl_max * ctrl_amount);
+                dr = max(min(ctrl_max * ctrl_amount, dr_tmp), -1 * ctrl_max * ctrl_amount);
 
             } else {
                 // 制御フラグがなければ制御値0
