@@ -364,8 +364,8 @@ void searchB_S_fast(void) {
 
         //----前進----
         case 0x88:
+          if(MF.FLAG.SCND){
             uint8_t r_cnt_temp = 1;
-
 
             while((route[r_cnt + r_cnt_temp] == 0x88)){   //  次も直進ならr_cnt_tempをインクリメント
                 r_cnt_temp++;
@@ -413,8 +413,10 @@ void searchB_S_fast(void) {
             for(int i = 1; i < r_cnt_temp; i++){        //内部情報を更新
                 adv_pos();
             }
-
-            //one_sectionU();
+          }
+          else{
+            one_sectionU();
+          }
             break;
         //----右折----
         case 0x44:
