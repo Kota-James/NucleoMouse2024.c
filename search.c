@@ -361,13 +361,14 @@ void searchB_S_fast(void) {
         switch (
             route
                 [r_cnt++]) { // route配列によって進行を決定。経路カウンタを進める
+                             // 後置インクリメントであることに注意
 
         //----前進----
         case 0x88:
           if(MF.FLAG.SCND){
             uint8_t r_cnt_temp = 1;
 
-            while((route[r_cnt + r_cnt_temp] == 0x88)){   //  次も直進ならr_cnt_tempをインクリメント
+            while((route[r_cnt + r_cnt_temp - 1] == 0x88)){   //  次も直進ならr_cnt_tempをインクリメント
                 r_cnt_temp++;
             }
 
