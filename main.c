@@ -117,6 +117,8 @@ int main(void)
                       //Defined in sensor.c
     drive_init();     //Initialization of running system variables, settings of GPIO related to motors and timer interrupt used to PWM output
                       //Defined in drive.c
+    interrupt_init(); //Initialization of control system variables.
+
     search_init();    //Initialization of search system variables
                       //Defined in search.c
     printf("***** WMMC Nucleo Mouse 2024 *****\n");
@@ -146,35 +148,27 @@ int main(void)
             printf("Mode 1: 1st Run.\n");
             drive_enable_motor();   //excitation the stepper motor. it is defined in drive.c
 
-
             MF.FLAG.SCND = 0;   //Clear secondary run flag. mouse flag is defined in global.h
-
             goal_x = GOAL_X;
             goal_y = GOAL_Y;    //Set goal coordinates. it is defined in global.h
 
-
-            rotate_R90();   //rotate 90 degrees to the right. it is defined in drive.c
-            drive_wait();   //Wait until the aircraft stabilizes. it is defined in drive.h
-            set_position(0);    //Center the aircraft position with the butt rest. it is defined in drive.c
-
-            drive_wait();   //wait until the machine stabilizes
-            rotate_L90();   //rotate 90 degrees to the left. it is defined in drive.c
-            drive_wait();   //wait until the machine stabilizes
-            set_position(0);    //center the machine position with the butt rest.
-            drive_wait();   //wait until the machine stabilizes
-
+            butt_adjust();
             get_base();   //get base value to wall control
 
-            searchB_S_conf_route();    //Search run from the current location as the starting point to the goal coordinates
+            min_t_cnt = 0;
+            searchB_S_go();    //Search run from the current location as the starting point to the goal coordinates
             HAL_Delay(100);
 
             goal_x = goal_y = 0;    //Set the goal coordinates as the starting point
-            searchB_S_conf_route();    //Return to starting point while exploring
+
+            min_t_cnt = 0;
+            searchB_S_back();    //Return to starting point while exploring
 
             goal_x = GOAL_X;
             goal_y = GOAL_Y;    //Set goal coordinates
-
             drive_disable_motor();    //Stop excitation of stepping motor
+
+            mode++;
             break;
 
         case 2:
@@ -186,33 +180,50 @@ int main(void)
             goal_x = GOAL_X;
             goal_y = GOAL_Y;
 
-            rotate_R90();
-            drive_wait();
-            set_position(0);
-            drive_wait();
-            rotate_L90();
-            drive_wait();
-            set_position(0);
-            drive_wait();
-
-            get_base();
-
-            searchB_S_fast();
+            //butt_adjust();
+            //get_base();
+            min_t_cnt = 250;
+            searchB_S_go();
             HAL_Delay(100);
 
             goal_x = goal_y = 0;
-            searchB_S_conf_route();
+
+            min_t_cnt = 250;
+            searchB_S_back();
 
             goal_x = GOAL_X;
             goal_y = GOAL_Y;
 
             drive_disable_motor();
+
+
             break;
 
         case 3:
-            //==== empty mode ====
 
             printf("Mode 3: .\n");
+            drive_enable_motor();
+
+            MF.FLAG.SCND = 1;   //Set secondary travel flag
+            goal_x = GOAL_X;
+            goal_y = GOAL_Y;
+
+            //butt_adjust();
+            //get_base();
+            min_t_cnt = 250;
+            searchB_S_go();
+            HAL_Delay(100);
+
+            goal_x = goal_y = 0;
+
+            min_t_cnt = 250;
+            searchB_S_back();
+
+            goal_x = GOAL_X;
+            goal_y = GOAL_Y;
+
+            drive_disable_motor();
+
             break;
 
         case 4:

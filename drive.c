@@ -390,6 +390,16 @@ void drive_init(void){
   max_t_cnt = MAX_T_CNT;      //テーブルカウンタ最高値初期化     MAX_T_CNTはparams.hにマクロ定義あり
   min_t_cnt = MIN_T_CNT;      //テーブルカウンタ最低値初期化     MIN_T_CNTはparams.hにマクロ定義あり
 
+  pulse_rot_in = PULSE_ROT_IN;
+  pulse_rot_out = PULSE_ROT_OUT;
+  pulse_offset = PULSE_OFFSET;
+
+  arr_in = ARR_IN;
+  arr_out = ARR_OUT;
+
+  rot_start_fl = ROT_START_FL;
+  rot_start_fr = ROT_START_FR;
+
   //====マウスフラグの初期化===
   MF.FLAGS = 0;         //フラグクリア
 
@@ -526,6 +536,24 @@ void drive_set_dir(uint8_t d_dir){
       HAL_GPIO_WritePin(CW_CCW_R_2_GPIO_Port, CW_CCW_R_2_Pin, MT_BACK_R);
       break;
   }
+}
+
+
+//+++++++++++++++++++++++++++++++++++++++++++++++
+//butt_adjust
+//  尻当て調整
+//  引数：なし
+//  戻り値：なし
+//+++++++++++++++++++++++++++++++++++++++++++++++
+void butt_adjust(void){
+  rotate_R90();   //rotate 90 degrees to the right. it is defined in drive.c
+  drive_wait();   //Wait until the aircraft stabilizes. it is defined in drive.h
+  set_position(0);    //Center the aircraft position with the butt rest. it is defined in drive.c
+  drive_wait();   //wait until the machine stabilizes
+  rotate_L90();   //rotate 90 degrees to the left. it is defined in drive.c
+  drive_wait();   //wait until the machine stabilizes
+  set_position(0);    //center the machine position with the butt rest.
+  drive_wait();   //wait until the machine stabilizes
 }
 
 
