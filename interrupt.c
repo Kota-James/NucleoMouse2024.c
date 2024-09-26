@@ -7,42 +7,14 @@
 
 #include "global.h"
 
-
-
-/*==========================================================
-    初期化関数・設定関数・その他関数
-==========================================================*/
-//+++++++++++++++++++++++++++++++++++++++++++++++
-//interrupt_init
-// 制御系の変数の初期化
-// 引数：なし
-// 戻り値：なし
-//+++++++++++++++++++++++++++++++++++++++++++++++
-void interrupt_init(void){
-
-  //====制御系の変数の初期化====
-  //マクロ定義されている値を代入
-  //dl_tmp = 0;
-  //dr_tmp = 0;
-
-  //wall_base_l = WALL_BASE_L;
-  //wall_base_r = WALL_BASE_R;
-  //ctrl_base_l = CTRL_BASE_L;
-  //ctrl_base_r = CTRL_BASE_R;
-
-  //ctrl_max = CTRL_MAX;
-  //ctrl_p = CTRL_P;
-  //ctrl_d = CTRL_D;
-  ctrl_amount_kid = 2;  //CTRL_AMOUNT
-  ctrl_amount_mother = 1;
-}
-
+#include "interrupt.h"
 
 
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   static uint32_t pre_ad_l = 0, pre_ad_r = 0;        //前回のセンサ値を格納　静的変数として宣言し、0で初期化
   int32_t change_value_l, change_value_r;   //前回のセンサ値との差を入れる変数
+
 
     /*==========================================================
         走行用タイマ割り込み
@@ -295,8 +267,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                 }
 */
                 // 一次保存した制御比例値をdlとdrに反映させる
-                dl = max(min(CTRL_MAX, dl_tmp), -1 * CTRL_MAX) * ctrl_amount_kid / ctrl_amount_mother;
-                dr = max(min(CTRL_MAX, dr_tmp), -1 * CTRL_MAX) * ctrl_amount_kid / ctrl_amount_mother;
+                dl = max(min(CTRL_MAX, dl_tmp), -1 * CTRL_MAX);// * ctrl_amount_kid / ctrl_amount_mother;
+                dr = max(min(CTRL_MAX, dr_tmp), -1 * CTRL_MAX);// * ctrl_amount_kid / ctrl_amount_mother;
 
             } else {
                 // 制御フラグがなければ制御値0
