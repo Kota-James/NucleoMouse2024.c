@@ -33,7 +33,8 @@ void interrupt_init(void){
   //ctrl_max = CTRL_MAX;
   //ctrl_p = CTRL_P;
   //ctrl_d = CTRL_D;
-  ctrl_amount = CTRL_AMOUNT;
+  ctrl_amount_kid = 2;  //CTRL_AMOUNT
+  ctrl_amount_mother = 1;
 }
 
 
@@ -294,8 +295,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                 }
 */
                 // 一次保存した制御比例値をdlとdrに反映させる
-                dl = max(min(CTRL_MAX/* * ctrl_amount*/, dl_tmp), -1 * CTRL_MAX/* * ctrl_amount*/);
-                dr = max(min(CTRL_MAX/* * ctrl_amount*/, dr_tmp), -1 * CTRL_MAX/* * ctrl_amount*/);
+                dl = max(min(CTRL_MAX, dl_tmp), -1 * CTRL_MAX) * ctrl_amount_kid / ctrl_amount_mother;
+                dr = max(min(CTRL_MAX, dr_tmp), -1 * CTRL_MAX) * ctrl_amount_kid / ctrl_amount_mother;
 
             } else {
                 // 制御フラグがなければ制御値0
