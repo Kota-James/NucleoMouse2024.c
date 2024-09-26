@@ -156,8 +156,9 @@ int main(void)
             get_base();   //get base value to wall control
 
             min_t_cnt = 0;
-            //ctrl_amount_kid = 2;
-            //ctrl_amount_mother = 1;   //CTRL_AMOUNT = 2
+            MF.FLAG.MODE1 = 1;
+            MF.FLAG.MODE2 = 0;
+            MF.FLAG.MODE3 = 0;
             searchB_S_go();    //Search run from the current location as the starting point to the goal coordinates
             HAL_Delay(100);
 
@@ -182,11 +183,12 @@ int main(void)
             goal_x = GOAL_X;
             goal_y = GOAL_Y;
 
-            //butt_adjust();
-            //get_base();
+            butt_adjust();
+            get_base();
             min_t_cnt = 250;
-            //ctrl_amount_kid = 4;
-            //ctrl_amount_mother = 2;   //CTRL_AMOUNT = 0.5
+            MF.FLAG.MODE1 = 0;
+            MF.FLAG.MODE2 = 1;
+            MF.FLAG.MODE3 = 0;
             searchB_S_go();
             HAL_Delay(100);
 
@@ -212,11 +214,12 @@ int main(void)
             goal_x = GOAL_X;
             goal_y = GOAL_Y;
 
-            //butt_adjust();
-            //get_base();
+            butt_adjust();
+            get_base();
             min_t_cnt = 2250;
-            //ctrl_amount_kid = 1;
-            //ctrl_amount_mother = 2;   //CTRL_AMOUNT = 0.5
+            MF.FLAG.MODE1 = 0;
+            MF.FLAG.MODE2 = 0;
+            MF.FLAG.MODE3 = 1;
             searchB_S_go();
             HAL_Delay(100);
 

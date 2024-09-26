@@ -267,8 +267,19 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                 }
 */
                 // 一次保存した制御比例値をdlとdrに反映させる
-                dl = max(min(CTRL_MAX, dl_tmp), -1 * CTRL_MAX);// * ctrl_amount_kid / ctrl_amount_mother;
-                dr = max(min(CTRL_MAX, dr_tmp), -1 * CTRL_MAX);// * ctrl_amount_kid / ctrl_amount_mother;
+                dl = max(min(CTRL_MAX, dl_tmp), -1 * CTRL_MAX);
+                dr = max(min(CTRL_MAX, dr_tmp), -1 * CTRL_MAX);
+
+                if(MF.FLAG.MODE1){          //制御量調整
+                    dl *= CTRL_MODE1;
+                    dr *= CTRL_MODE1;
+                }else if(MF.FLAG.MODE2){
+                    dl *= CTRL_MODE2;
+                    dr *= CTRL_MODE2;
+                }else if(MF.FLAG.MODE3){
+                    dl *= CTRL_MODE3;
+                    dr *= CTRL_MODE3;
+                }
 
             } else {
                 // 制御フラグがなければ制御値0
