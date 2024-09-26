@@ -169,7 +169,7 @@ int main(void)
             goal_y = GOAL_Y;    //Set goal coordinates
             drive_disable_motor();    //Stop excitation of stepping motor
 
-            //mode++
+            //mode++;
             break;
 
         case 2:
