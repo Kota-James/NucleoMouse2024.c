@@ -122,22 +122,33 @@ void rotate_L90_S(void){
   MF.FLAG.CTRL = 1;                   //制御無効
   drive_set_dir(FORWARD);            //右に旋回するようモータの回転方向を設定
 
+  if(MF.FLAG.MODE1 || MF. FLAG.MODE2 || MF.FLAG.MODE3){
+      pulse_rot_in = PULSE_ROT_IN_50;
+      pulse_rot_out = PULSE_ROT_OUT_50;
+  }else if(MF.FLAG.MODE4){
+      pulse_rot_in = PULSE_ROT_IN_40;
+      pulse_rot_out = PULSE_ROT_OUT_40;
+  }else if(MF.FLAG.MODE5){
+      pulse_rot_in = PULSE_ROT_IN_35;
+      pulse_rot_out = PULSE_ROT_OUT_35;
+  }
+  pulse_offset = PULSE_OFFSET;
 
   if(ad_fl >= WALL_BASE_FL * 2 && ad_fr >= WALL_BASE_FR * 2){       //前壁が確実にある時b
       while(ad_fl < ROT_START_FL && ad_fr < ROT_START_FR){          //センサ値が基準値に達するまで
           driveU2(1, ARR_OFFSET);         //1パルス分だけ進む
       }
   }else{                                        //前壁がない時b
-      driveU2(PULSE_OFFSET, ARR_OFFSET);        //設定したパルス分だけ進む
+      driveU2(pulse_offset, ARR_OFFSET);        //設定したパルス分だけ進む
   }
 
 
   MF.FLAG.ROTATER = 1;
-  driveR(PULSE_ROT_OUT, PULSE_ROT_IN);      //デフォルトインターバルで指定パルス分回転。回転後に停止する
+  driveR(pulse_rot_out, pulse_rot_in);      //デフォルトインターバルで指定パルス分回転。回転後に停止する
   MF.FLAG.ROTATER = 0;
 
   MF.FLAG.CTRL = 1;
-  driveU2(PULSE_OFFSET, ARR_OFFSET);    //  オフセット区間
+  driveU2(pulse_offset, ARR_OFFSET);    //  オフセット区間
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++
@@ -153,22 +164,33 @@ void rotate_R90_S(void){
   MF.FLAG.CTRL = 1;                   //制御を無効にする
   drive_set_dir(FORWARD);            //左に旋回するようモータの回転方向を設定
 
+  if(MF.FLAG.MODE1 || MF. FLAG.MODE2 || MF.FLAG.MODE3){
+      pulse_rot_in = PULSE_ROT_IN_50;
+      pulse_rot_out = PULSE_ROT_OUT_50;
+  }else if(MF.FLAG.MODE4){
+      pulse_rot_in = PULSE_ROT_IN_40;
+      pulse_rot_out = PULSE_ROT_OUT_40;
+  }else if(MF.FLAG.MODE5){
+      pulse_rot_in = PULSE_ROT_IN_35;
+      pulse_rot_out = PULSE_ROT_OUT_35;
+  }
+  pulse_offset = PULSE_OFFSET;
 
   if(ad_fl >= WALL_BASE_FL * 2 && ad_fr >= WALL_BASE_FR * 2){       //前壁が確実にある時
       while(ad_fl < ROT_START_FL && ad_fr < ROT_START_FR){          //センサ値が基準値に達するまで
           driveU2(1, ARR_OFFSET);         //1パルス分だけ進む
       }
   }else{                                        //前壁がない時b
-      driveU2(PULSE_OFFSET, ARR_OFFSET);        //設定したパルス分だけ進む
+      driveU2(pulse_offset, ARR_OFFSET);        //設定したパルス分だけ進む
   }
 
 
   MF.FLAG.ROTATEL = 1;
-  driveR(PULSE_ROT_IN, PULSE_ROT_OUT);      //デフォルトインターバルで指定パルス分回転。回転後に停止する
+  driveR(pulse_rot_in, pulse_rot_out);      //デフォルトインターバルで指定パルス分回転。回転後に停止する
   MF.FLAG.ROTATEL = 0;
 
   MF.FLAG.CTRL = 1;
-  driveU2(PULSE_OFFSET, ARR_OFFSET);    //  オフセット区間
+  driveU2(pulse_offset, ARR_OFFSET);    //  オフセット区間
 }
 
 
