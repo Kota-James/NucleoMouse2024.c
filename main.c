@@ -249,47 +249,17 @@ int main(void)
             break;
 
         case 6:
-            //==== test run ===Use this mode to adjust parameters such as leg distance and turning angle.
+            //====Secondary shortest run Mode 4====
 
-            printf("Mode 6; Test Run.\n");
-            test_run();   // it is defined in drive.c
+            printf("Mode 6: .\n");
+
             break;
 
         case 7:
-            //==== sensor check ====
-            //Use this mode to adjust the threshold for the sensor to determine the presence or absence of a wall.
+            //==== test run ===Use this mode to adjust parameters such as leg distance and turning angle.
 
-            printf("Sensor Check.\n");
-            while(1){
-                get_wall_info();
-                led_write(wall_info & 0x11, wall_info & 0x88, wall_info & 0x44);
-                printf(" ad_l : %lu, ad_fl : %lu, ad_fr : %lu, ad_r : %lu, ad_batt : %lu\n",
-                        ad_l, ad_fl, ad_fr, ad_r, ad_batt);
-                printf("dif_l : %4d, dif_r : %4d\n", dif_l, dif_r);
-
-                if(wall_info & 0x11){
-                  printf("Left : [X], ");
-                }else{
-                  printf("Left : [ ], ");
-                }
-
-                if(wall_info & 0x88){
-                  printf("Front : [X], ");
-                }else{
-                  printf("Front : [ ], ");
-                }
-
-                if(wall_info & 0x44){
-                  printf("Right : [X], ");
-                }else{
-                  printf("Right : [ ]\n");
-                }
-
-                //Measure battery voltage and store in ad_batt
-                //cf.)interrupt.c
-
-                HAL_Delay(333);
-            }
+            printf("Mode 7; Test Run.\n");
+            test_run();   // it is defined in drive.c
             break;
     }
 

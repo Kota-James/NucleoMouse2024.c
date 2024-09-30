@@ -595,9 +595,44 @@ void test_run(void){
     switch(mode){
 
       case 0:
-        //----尻当て----
+      /*  //----尻当て----
         printf("Set Position.\n");
         set_position(0);
+        break;
+      */
+        //==== sensor check ====
+        //Use this mode to adjust the threshold for the sensor to determine the presence or absence of a wall.
+        printf("Sensor Check.\n");
+        while(1){
+            get_wall_info();
+            led_write(wall_info & 0x11, wall_info & 0x88, wall_info & 0x44);
+            printf(" ad_l : %lu, ad_fl : %lu, ad_fr : %lu, ad_r : %lu, ad_batt : %lu\n",
+                    ad_l, ad_fl, ad_fr, ad_r, ad_batt);
+            printf("dif_l : %4d, dif_r : %4d\n", dif_l, dif_r);
+
+            if(wall_info & 0x11){
+              printf("Left : [X], ");
+            }else{
+              printf("Left : [ ], ");
+            }
+
+            if(wall_info & 0x88){
+              printf("Front : [X], ");
+            }else{
+              printf("Front : [ ], ");
+            }
+
+            if(wall_info & 0x44){
+              printf("Right : [X], ");
+            }else{
+              printf("Right : [ ]\n");
+            }
+
+            //Measure battery voltage and store in ad_batt
+            //cf.)interrupt.c
+
+            HAL_Delay(333);
+        }
         break;
       case 1:
         //----1区画等速走行----
