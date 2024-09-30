@@ -637,6 +637,7 @@ void test_run(void){
       case 1:
         //----1区画等速走行----
         printf("1 Section, Forward, Constant Speed.\n");
+        butt_adjust();
         MF.FLAG.CTRL = 0;           //制御を無効にする
         drive_set_dir(FORWARD);     //前進するようにモータの回転方向を設定
         for(i = 0; i < 1; i++){
@@ -647,6 +648,7 @@ void test_run(void){
       case 2:
         //----右90度回転----
         printf("Rotate R90.\n");
+        butt_adjust();
         for(i = 0; i < 16; i++){
           rotate_R90();
         }
@@ -654,6 +656,7 @@ void test_run(void){
       case 3:
         //----左90度回転----
         printf("Rotate L90.\n");
+        butt_adjust();
         for(i = 0; i < 16; i++){
           rotate_L90();
         }
@@ -661,6 +664,7 @@ void test_run(void){
       case 4:
         //----180度回転----
         printf("Rotate 180.\n");
+        butt_adjust();
         for(i = 0; i < 8; i++){
           rotate_180();
         }

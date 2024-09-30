@@ -144,8 +144,8 @@ int main(void)
 
             break;
         case 1:
-            //Exploration run
-            printf("Mode 1: 1st Run.\n");
+            //Auto start
+            printf("Mode 1: .\n");
             drive_enable_motor();   //excitation the stepper motor. it is defined in drive.c
 
             MF.FLAG.SCND = 0;   //Clear secondary run flag. mouse flag is defined in global.h
@@ -171,12 +171,41 @@ int main(void)
             goal_y = GOAL_Y;    //Set goal coordinates
             drive_disable_motor();    //Stop excitation of stepping motor
 
-            //mode++;
             break;
 
         case 2:
-            //====Secondary shortest run====
-            printf("Mode 2: 2nd Run.\n");
+            //Exploration run
+            printf("Mode 2: .\n");
+            drive_enable_motor();   //excitation the stepper motor. it is defined in drive.c
+
+            MF.FLAG.SCND = 0;   //Clear secondary run flag. mouse flag is defined in global.h
+            goal_x = GOAL_X;
+            goal_y = GOAL_Y;    //Set goal coordinates. it is defined in global.h
+
+            butt_adjust();
+            get_base();   //get base value to wall control
+
+            min_t_cnt = 0;
+            MF.FLAG.MODE1 = 1;
+            MF.FLAG.MODE2 = 0;
+            MF.FLAG.MODE3 = 0;
+            searchB_S_go();    //Search run from the current location as the starting point to the goal coordinates
+            HAL_Delay(100);
+
+            goal_x = goal_y = 0;    //Set the goal coordinates as the starting point
+
+            min_t_cnt = 0;
+            searchB_S_back();    //Return to starting point while exploring
+
+            goal_x = GOAL_X;
+            goal_y = GOAL_Y;    //Set goal coordinates
+            drive_disable_motor();    //Stop excitation of stepping motor
+
+            break;
+
+        case 3:
+          //====Secondary shortest run Mode 1====
+            printf("Mode 3: .\n");
             drive_enable_motor();
 
             MF.FLAG.SCND = 1;   //Set secondary travel flag
@@ -202,12 +231,12 @@ int main(void)
 
             drive_disable_motor();
 
-
             break;
 
-        case 3:
-          //====Secondary shortest run Mode 1====
-            printf("Mode 3: .\n");
+        case 4:
+            //====Secondary shortest run Mode 2====
+
+            printf("Mode 4: .\n");
             drive_enable_motor();
 
             MF.FLAG.SCND = 1;   //Set secondary travel flag
@@ -233,12 +262,6 @@ int main(void)
 
             drive_disable_motor();
 
-            break;
-
-        case 4:
-            //====Secondary shortest run Mode 2====
-
-            printf("Mode 4: .\n");
             break;
 
         case 5:
