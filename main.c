@@ -206,7 +206,7 @@ int main(void)
             break;
 
         case 3:
-
+          //====Secondary shortest run Mode 1====
             printf("Mode 3: .\n");
             drive_enable_motor();
 
@@ -236,50 +236,15 @@ int main(void)
             break;
 
         case 4:
-            //==== empty mode ====
+            //====Secondary shortest run Mode 2====
 
             printf("Mode 4: .\n");
             break;
 
         case 5:
-            //==== empty mode ====
+            //====Secondary shortest run Mode 3====
 
             printf("Mode 5: .\n");
-
-            drive_enable_motor();
-
-            rotate_R90();
-            drive_wait();
-            set_position(0);
-            drive_wait();
-            rotate_L90();
-            drive_wait();
-            set_position(0);
-            drive_wait();
-
-            MF.FLAGS = 0;
-            drive_set_dir(FORWARD);     //前進するようにモータの回転方向を設定
-
-            driveA(2 * PULSE_SEC_HALF);     //半区画のパルス分加速しながら走行
-            //driveU(2 * PULSE_SEC_HALF);     //半区画のパルス分等速で走行
-            driveD(2 * PULSE_SEC_HALF);     //半区画のパルス分減速しながら走行。走行後は停止する
-
-            rotate_R90();
-            driveC(PULSE_SEC_HALF);     //半区画のパルス分デフォルトインターバルで走行
-
-            for(int i = 0; i < 16; i++){
-                MF.FLAG.CTRL = 0;
-                driveA(PULSE_SEC_HALF);       //半区画のパルス分加速しながら走行
-                MF.FLAG.CTRL = 1;
-                //one_sectionU();     //1区画のパルス分等速で走行
-                MF.FLAG.CTRL = 0;
-                driveD(PULSE_SEC_HALF);       //半区画のパルス分減速しながら走行。走行後は停止する
-                //HAL_Delay(500);
-                rotate_R90_S();
-            }
-            half_sectionD();
-
-            drive_disable_motor();
 
             break;
 
