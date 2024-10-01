@@ -148,6 +148,7 @@ int main(void)
             printf("Mode 1: .\n");
             drive_enable_motor();   //excitation the stepper motor. it is defined in drive.c
 
+      //==========探索走行==========
             MF.FLAG.SCND = 0;   //Clear secondary run flag. mouse flag is defined in global.h
             goal_x = GOAL_X;
             goal_y = GOAL_Y;    //Set goal coordinates. it is defined in global.h
@@ -169,9 +170,111 @@ int main(void)
             min_t_cnt = 0;
             searchB_S_back();    //Return to starting point while exploring
 
+            //goal_x = GOAL_X;
+            //goal_y = GOAL_Y;    //Set goal coordinates
+            //drive_disable_motor();    //Stop excitation of stepping motor
+
+       //===========最短走行1回目============
+            MF.FLAG.SCND = 1;   //Set secondary travel flag
             goal_x = GOAL_X;
-            goal_y = GOAL_Y;    //Set goal coordinates
-            drive_disable_motor();    //Stop excitation of stepping motor
+            goal_y = GOAL_Y;
+
+            //butt_adjust();
+            //get_base();
+            min_t_cnt = 250;
+            MF.FLAG.MODE1 = 0;
+            MF.FLAG.MODE2 = 1;
+            MF.FLAG.MODE3 = 0;
+            MF.FLAG.MODE4 = 0;
+            MF.FLAG.MODE5 = 0;
+            searchB_S_go();
+            HAL_Delay(100);
+
+            goal_x = goal_y = 0;
+
+            min_t_cnt = 250;
+            searchB_S_back();
+
+
+            //drive_disable_motor();
+
+      //===========最短走行2回目=============
+            MF.FLAG.SCND = 1;   //Set secondary travel flag
+            goal_x = GOAL_X;
+            goal_y = GOAL_Y;
+            min_t_cnt = 2250;
+            MF.FLAG.MODE1 = 0;
+            MF.FLAG.MODE2 = 0;
+            MF.FLAG.MODE3 = 1;
+            MF.FLAG.MODE4 = 0;
+            MF.FLAG.MODE5 = 0;
+            searchB_S_go();
+            HAL_Delay(100);
+
+            goal_x = goal_y = 0;
+
+            min_t_cnt = 250;
+            searchB_S_back();
+
+            //goal_x = GOAL_X;
+            //goal_y = GOAL_Y;
+
+            //drive_disable_motor();
+
+      //==========最短走行3回目============
+            MF.FLAG.SCND = 1;   //Set secondary travel flag
+            goal_x = GOAL_X;
+            goal_y = GOAL_Y;
+
+            //butt_adjust();
+            //get_base();
+            min_t_cnt = 2250;
+            MF.FLAG.MODE1 = 0;
+            MF.FLAG.MODE2 = 0;
+            MF.FLAG.MODE3 = 0;
+            MF.FLAG.MODE4 = 1;
+            MF.FLAG.MODE5 = 0;
+            searchB_S_go();
+            HAL_Delay(100);
+
+            goal_x = goal_y = 0;
+
+            min_t_cnt = 250;
+            searchB_S_back();
+
+            //goal_x = GOAL_X;
+            //goal_y = GOAL_Y;
+
+            //drive_disable_motor();
+
+
+       //==========-最短走行4回目============
+            drive_enable_motor();
+
+            MF.FLAG.SCND = 1;   //Set secondary travel flag
+            goal_x = GOAL_X;
+            goal_y = GOAL_Y;
+
+            //butt_adjust();
+            //get_base();
+            min_t_cnt = 2250;
+            MF.FLAG.MODE1 = 0;
+            MF.FLAG.MODE2 = 0;
+            MF.FLAG.MODE3 = 0;
+            MF.FLAG.MODE4 = 0;
+            MF.FLAG.MODE5 = 1;
+            searchB_S_go();
+            HAL_Delay(100);
+
+            goal_x = goal_y = 0;
+
+            min_t_cnt = 250;
+            searchB_S_back();
+
+            goal_x = GOAL_X;
+            goal_y = GOAL_Y;
+
+            drive_disable_motor();
 
             break;
 

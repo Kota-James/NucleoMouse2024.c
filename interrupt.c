@@ -62,13 +62,31 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                 DEFAULT_INTERVAL -
                     dl); // デフォルトインターバルに制御を加えた値に設定
 
-        }else if(MF.FLAG.ROTATEL){
-            __HAL_TIM_SET_AUTORELOAD(&htim16, ARR_IN);
+        }else if(MF.FLAG.ROTATEL && MF.FLAG.MODE1){               //左回転
+            __HAL_TIM_SET_AUTORELOAD(&htim16, ARR_IN_50);
+        }else if(MF.FLAG.ROTATEL && MF.FLAG.MODE2){
+            __HAL_TIM_SET_AUTORELOAD(&htim16, ARR_IN_50);
+        }else if(MF.FLAG.ROTATEL && MF.FLAG.MODE3){
+            __HAL_TIM_SET_AUTORELOAD(&htim16, ARR_IN_50);
+        }else if(MF.FLAG.ROTATEL && MF.FLAG.MODE4){
+            __HAL_TIM_SET_AUTORELOAD(&htim16, ARR_IN_40);
+        }else if(MF.FLAG.ROTATEL && MF.FLAG.MODE5){
+            __HAL_TIM_SET_AUTORELOAD(&htim16, ARR_IN_35);
         }
 
-        else if(MF.FLAG.ROTATER){
-            __HAL_TIM_SET_AUTORELOAD(&htim16, ARR_OUT);
+
+         else if(MF.FLAG.ROTATER && MF.FLAG.MODE1){              //右回転
+            __HAL_TIM_SET_AUTORELOAD(&htim16, ARR_OUT_50);
+        }else if(MF.FLAG.ROTATER && MF.FLAG.MODE2){
+            __HAL_TIM_SET_AUTORELOAD(&htim16, ARR_OUT_50);
+        }else if(MF.FLAG.ROTATER && MF.FLAG.MODE3){
+            __HAL_TIM_SET_AUTORELOAD(&htim16, ARR_OUT_50);
+        }else if(MF.FLAG.ROTATER && MF.FLAG.MODE4){
+            __HAL_TIM_SET_AUTORELOAD(&htim16, ARR_OUT_40);
+        }else if(MF.FLAG.ROTATER && MF.FLAG.MODE5){
+            __HAL_TIM_SET_AUTORELOAD(&htim16, ARR_OUT_35);
         }
+
         else if(MF.FLAG.DRIVEU2){
           ;
         }
@@ -106,13 +124,30 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                     dr); // デフォルトインターバルに制御を加えた値に設定
         }
 
-        else if(MF.FLAG.ROTATEL){
-            __HAL_TIM_SET_AUTORELOAD(&htim17, ARR_OUT);
+        else if(MF.FLAG.ROTATEL && MF.FLAG.MODE1){                  //左回転
+            __HAL_TIM_SET_AUTORELOAD(&htim17, ARR_OUT_50);
+        }else if(MF.FLAG.ROTATEL && MF.FLAG.MODE2){
+            __HAL_TIM_SET_AUTORELOAD(&htim17, ARR_OUT_50);
+        }else if(MF.FLAG.ROTATEL && MF.FLAG.MODE3){
+            __HAL_TIM_SET_AUTORELOAD(&htim17, ARR_OUT_50);
+        }else if(MF.FLAG.ROTATEL && MF.FLAG.MODE4){
+            __HAL_TIM_SET_AUTORELOAD(&htim17, ARR_OUT_40);
+        }else if(MF.FLAG.ROTATEL && MF.FLAG.MODE5){
+            __HAL_TIM_SET_AUTORELOAD(&htim17, ARR_OUT_35);
         }
 
-        else if(MF.FLAG.ROTATER){
-            __HAL_TIM_SET_AUTORELOAD(&htim17, ARR_IN);
+         else if(MF.FLAG.ROTATER && MF.FLAG.MODE1){                  //右回転
+            __HAL_TIM_SET_AUTORELOAD(&htim17, ARR_IN_50);
+        }else if(MF.FLAG.ROTATER && MF.FLAG.MODE2){
+            __HAL_TIM_SET_AUTORELOAD(&htim17, ARR_IN_50);
+        }else if(MF.FLAG.ROTATER && MF.FLAG.MODE3){
+            __HAL_TIM_SET_AUTORELOAD(&htim17, ARR_IN_50);
+        }else if(MF.FLAG.ROTATER && MF.FLAG.MODE4){
+            __HAL_TIM_SET_AUTORELOAD(&htim17, ARR_IN_40);
+        }else if(MF.FLAG.ROTATER && MF.FLAG.MODE5){
+            __HAL_TIM_SET_AUTORELOAD(&htim17, ARR_IN_35);
         }
+
         else if(MF.FLAG.DRIVEU2){
           ;
         }
@@ -279,6 +314,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                 }else if(MF.FLAG.MODE3){
                     dl *= CTRL_MODE3;
                     dr *= CTRL_MODE3;
+                }else if(MF.FLAG.MODE4){
+                    dl *= CTRL_MODE4;
+                    dr *= CTRL_MODE4;
+                }else if(MF.FLAG.MODE5){
+                    dl *= CTRL_MODE5;
+                    dr *= CTRL_MODE5;
                 }
 
             } else {

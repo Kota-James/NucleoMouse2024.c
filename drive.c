@@ -125,21 +125,24 @@ void rotate_L90_S(void){
   if(MF.FLAG.MODE1 || MF. FLAG.MODE2 || MF.FLAG.MODE3){
       pulse_rot_in = PULSE_ROT_IN_50;
       pulse_rot_out = PULSE_ROT_OUT_50;
+      arr_offset = ARR_OFFSET_50;
   }else if(MF.FLAG.MODE4){
       pulse_rot_in = PULSE_ROT_IN_40;
       pulse_rot_out = PULSE_ROT_OUT_40;
+      arr_offset = ARR_OFFSET_40;
   }else if(MF.FLAG.MODE5){
       pulse_rot_in = PULSE_ROT_IN_35;
       pulse_rot_out = PULSE_ROT_OUT_35;
+      arr_offset = ARR_OFFSET_35;
   }
   pulse_offset = PULSE_OFFSET;
 
   if(ad_fl >= WALL_BASE_FL * 2 && ad_fr >= WALL_BASE_FR * 2){       //前壁が確実にある時b
       while(ad_fl < ROT_START_FL && ad_fr < ROT_START_FR){          //センサ値が基準値に達するまで
-          driveU2(1, ARR_OFFSET);         //1パルス分だけ進む
+          driveU2(1, arr_offset);         //1パルス分だけ進む
       }
   }else{                                        //前壁がない時b
-      driveU2(pulse_offset, ARR_OFFSET);        //設定したパルス分だけ進む
+      driveU2(pulse_offset, arr_offset);        //設定したパルス分だけ進む
   }
 
 
@@ -148,7 +151,7 @@ void rotate_L90_S(void){
   MF.FLAG.ROTATER = 0;
 
   MF.FLAG.CTRL = 1;
-  driveU2(pulse_offset, ARR_OFFSET);    //  オフセット区間
+  driveU2(pulse_offset, arr_offset);    //  オフセット区間
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++
@@ -167,21 +170,24 @@ void rotate_R90_S(void){
   if(MF.FLAG.MODE1 || MF. FLAG.MODE2 || MF.FLAG.MODE3){
       pulse_rot_in = PULSE_ROT_IN_50;
       pulse_rot_out = PULSE_ROT_OUT_50;
+      arr_offset = ARR_OFFSET_50;
   }else if(MF.FLAG.MODE4){
       pulse_rot_in = PULSE_ROT_IN_40;
       pulse_rot_out = PULSE_ROT_OUT_40;
+      arr_offset = ARR_OFFSET_40;
   }else if(MF.FLAG.MODE5){
       pulse_rot_in = PULSE_ROT_IN_35;
       pulse_rot_out = PULSE_ROT_OUT_35;
+      arr_offset = ARR_OFFSET_35;
   }
   pulse_offset = PULSE_OFFSET;
 
   if(ad_fl >= WALL_BASE_FL * 2 && ad_fr >= WALL_BASE_FR * 2){       //前壁が確実にある時
       while(ad_fl < ROT_START_FL && ad_fr < ROT_START_FR){          //センサ値が基準値に達するまで
-          driveU2(1, ARR_OFFSET);         //1パルス分だけ進む
+          driveU2(1, arr_offset);         //1パルス分だけ進む
       }
   }else{                                        //前壁がない時b
-      driveU2(pulse_offset, ARR_OFFSET);        //設定したパルス分だけ進む
+      driveU2(pulse_offset, arr_offset);        //設定したパルス分だけ進む
   }
 
 
@@ -190,7 +196,7 @@ void rotate_R90_S(void){
   MF.FLAG.ROTATEL = 0;
 
   MF.FLAG.CTRL = 1;
-  driveU2(pulse_offset, ARR_OFFSET);    //  オフセット区間
+  driveU2(pulse_offset, arr_offset);    //  オフセット区間
 }
 
 
