@@ -665,7 +665,7 @@ void test_run(void){
       case 1:
         //----1区画等速走行----
         printf("1 Section, Forward, Constant Speed.\n");
-        butt_adjust();
+        //butt_adjust();
         MF.FLAG.CTRL = 0;           //制御を無効にする
         drive_set_dir(FORWARD);     //前進するようにモータの回転方向を設定
         for(i = 0; i < 1; i++){
@@ -706,12 +706,12 @@ void test_run(void){
         drive_set_dir(FORWARD);     //前進するようにモータの回転方向を設定
 
         driveA(2 * PULSE_SEC_HALF);     //半区画のパルス分加速しながら走行
-        //driveU(2 * PULSE_SEC_HALF);     //半区画のパルス分等速で走行
+        driveU(2 * PULSE_SEC_HALF);     //半区画のパルス分等速で走行
         driveD(2 * PULSE_SEC_HALF);     //半区画のパルス分減速しながら走行。走行後は停止する
 
         rotate_R90();
         driveC(PULSE_SEC_HALF);     //半区画のパルス分デフォルトインターバルで走行
-
+        MF.FLAG.MODE1 = 1;
         for(int i = 0; i < 16; i++){
             MF.FLAG.CTRL = 0;
             driveA(PULSE_SEC_HALF);       //半区画のパルス分加速しながら走行
@@ -734,13 +734,13 @@ void test_run(void){
         MF.FLAGS = 0;
         drive_set_dir(FORWARD);     //前進するようにモータの回転方向を設定
 
-        driveA(0.5 * PULSE_SEC_HALF);     //半区画のパルス分加速しながら走行
+        driveA(PULSE_SEC_HALF);     //半区画のパルス分加速しながら走行
         //driveU(2 * PULSE_SEC_HALF);     //半区画のパルス分等速で走行
-        driveD(0.5 * PULSE_SEC_HALF);     //半区画のパルス分減速しながら走行。走行後は停止する
+        driveD(PULSE_SEC_HALF);     //半区画のパルス分減速しながら走行。走行後は停止する
 
         rotate_R90();
         driveC(PULSE_SEC_HALF);     //半区画のパルス分デフォルトインターバルで走行
-
+        MF.FLAG.MODE1 = 1;
         for(int i = 0; i < 16; i++){
             MF.FLAG.CTRL = 0;
             driveA(PULSE_SEC_HALF);       //半区画のパルス分加速しながら走行
@@ -758,6 +758,8 @@ void test_run(void){
       case 7:
         //----6区画連続走行----
         printf("6 Section, Forward, Continuous.\n");
+        drive_enable_motor();
+        //butt_adjust();
         MF.FLAG.CTRL = 0;           //制御を無効にする
         drive_set_dir(FORWARD);     //前進するようにモータの回転方向を設定
         driveA(PULSE_SEC_HALF);     //半区画のパルス分加速しながら走行
