@@ -123,24 +123,30 @@ void rotate_L90_S(void){
   drive_set_dir(FORWARD);            //右に旋回するようモータの回転方向を設定
 
   if(MF.FLAG.MODE1 || MF. FLAG.MODE2 || MF.FLAG.MODE3){
-      pulse_rot_in = PULSE_ROT_IN_50;
-      pulse_rot_out = PULSE_ROT_OUT_50;
+      pulse_rot_in = PULSE_ROT_IN_L50;
+      pulse_rot_out = PULSE_ROT_OUT_L50;
       pulse_offset = PULSE_OFFSET_50;
-      arr_offset = ARR_OFFSET_50;
+      arr_offset = ARR_OFFSET_L50;
+      rot_start_fl = ROT_START_FL_38;
+      rot_start_fr = ROT_START_FR_38;
   }else if(MF.FLAG.MODE4){
-      pulse_rot_in = PULSE_ROT_IN_40;
-      pulse_rot_out = PULSE_ROT_OUT_40;
+      pulse_rot_in = PULSE_ROT_IN_L40;
+      pulse_rot_out = PULSE_ROT_OUT_L40;
       pulse_offset = PULSE_OFFSET_40;
-      arr_offset = ARR_OFFSET_40;
+      arr_offset = ARR_OFFSET_L40;
+      rot_start_fl = ROT_START_FL_38;
+      rot_start_fr = ROT_START_FR_38;
   }else if(MF.FLAG.MODE5){
-      pulse_rot_in = PULSE_ROT_IN_35;
-      pulse_rot_out = PULSE_ROT_OUT_35;
+      pulse_rot_in = PULSE_ROT_IN_L35;
+      pulse_rot_out = PULSE_ROT_OUT_L35;
       pulse_offset = PULSE_OFFSET_35;
-      arr_offset = ARR_OFFSET_35;
+      arr_offset = ARR_OFFSET_L35;
+      rot_start_fl = ROT_START_FL_34;
+      rot_start_fr = ROT_START_FR_34;
   }
 
   if(ad_fl >= WALL_BASE_FL * 2 && ad_fr >= WALL_BASE_FR * 2){       //前壁が確実にある時b
-      while(ad_fl < ROT_START_FL && ad_fr < ROT_START_FR){          //センサ値が基準値に達するまで
+      while(ad_fl < rot_start_fl && ad_fr < rot_start_fr){          //センサ値が基準値に達するまで
           driveU2(1, arr_offset);         //1パルス分だけ進む
       }
   }else{                                        //前壁がない時b
@@ -170,22 +176,30 @@ void rotate_R90_S(void){
   drive_set_dir(FORWARD);            //左に旋回するようモータの回転方向を設定
 
   if(MF.FLAG.MODE1 || MF. FLAG.MODE2 || MF.FLAG.MODE3){
-      pulse_rot_in = PULSE_ROT_IN_50;
-      pulse_rot_out = PULSE_ROT_OUT_50;
-      arr_offset = ARR_OFFSET_50;
+      pulse_rot_in = PULSE_ROT_IN_R50;
+      pulse_rot_out = PULSE_ROT_OUT_R50;
+      pulse_offset = PULSE_OFFSET_50;
+      arr_offset = ARR_OFFSET_R50;
+      rot_start_fl = ROT_START_FL_38;
+      rot_start_fr = ROT_START_FR_38;
   }else if(MF.FLAG.MODE4){
-      pulse_rot_in = PULSE_ROT_IN_40;
-      pulse_rot_out = PULSE_ROT_OUT_40;
-      arr_offset = ARR_OFFSET_40;
+      pulse_rot_in = PULSE_ROT_IN_R40;
+      pulse_rot_out = PULSE_ROT_OUT_R40;
+      pulse_offset = PULSE_OFFSET_40;
+      arr_offset = ARR_OFFSET_R40;
+      rot_start_fl = ROT_START_FL_38;
+      rot_start_fr = ROT_START_FR_38;
   }else if(MF.FLAG.MODE5){
-      pulse_rot_in = PULSE_ROT_IN_35;
-      pulse_rot_out = PULSE_ROT_OUT_35;
-      arr_offset = ARR_OFFSET_35;
+      pulse_rot_in = PULSE_ROT_IN_R35;
+      pulse_rot_out = PULSE_ROT_OUT_R35;
+      pulse_offset = PULSE_OFFSET_35;
+      arr_offset = ARR_OFFSET_R35;
+      rot_start_fl = ROT_START_FL_34;
+      rot_start_fr = ROT_START_FR_34;
   }
-  pulse_offset = PULSE_OFFSET;
 
   if(ad_fl >= WALL_BASE_FL * 2 && ad_fr >= WALL_BASE_FR * 2){       //前壁が確実にある時
-      while(ad_fl < ROT_START_FL && ad_fr < ROT_START_FR){          //センサ値が基準値に達するまで
+      while(ad_fl < rot_start_fl && ad_fr < rot_start_fr){          //センサ値が基準値に達するまで
           driveU2(1, arr_offset);         //1パルス分だけ進む
       }
   }else{                                        //前壁がない時b
@@ -430,8 +444,8 @@ void drive_init(void){
   arr_in = ARR_IN;
   arr_out = ARR_OUT;
 
-  rot_start_fl = ROT_START_FL;
-  rot_start_fr = ROT_START_FR;
+  rot_start_fl = ROT_START_FL_38;
+  rot_start_fr = ROT_START_FR_38;
 
   //====マウスフラグの初期化===
   MF.FLAGS = 0;         //フラグクリア
@@ -713,7 +727,7 @@ void test_run(void){
 
         rotate_R90();
         driveC(PULSE_SEC_HALF);     //半区画のパルス分デフォルトインターバルで走行
-        MF.FLAG.MODE5 = 1;
+        MF.FLAG.MODE3 = 1;
         for(int i = 0; i < 16; i++){
             MF.FLAG.CTRL = 0;
             driveA(PULSE_SEC_HALF);       //半区画のパルス分加速しながら走行
@@ -742,7 +756,7 @@ void test_run(void){
 
         rotate_R90();
         driveC(PULSE_SEC_HALF);     //半区画のパルス分デフォルトインターバルで走行
-        MF.FLAG.MODE1 = 1;
+        MF.FLAG.MODE5 = 1;
         for(int i = 0; i < 16; i++){
             MF.FLAG.CTRL = 0;
             driveA(PULSE_SEC_HALF);       //半区画のパルス分加速しながら走行
