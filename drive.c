@@ -125,17 +125,19 @@ void rotate_L90_S(void){
   if(MF.FLAG.MODE1 || MF. FLAG.MODE2 || MF.FLAG.MODE3){
       pulse_rot_in = PULSE_ROT_IN_50;
       pulse_rot_out = PULSE_ROT_OUT_50;
+      pulse_offset = PULSE_OFFSET_50;
       arr_offset = ARR_OFFSET_50;
   }else if(MF.FLAG.MODE4){
       pulse_rot_in = PULSE_ROT_IN_40;
       pulse_rot_out = PULSE_ROT_OUT_40;
+      pulse_offset = PULSE_OFFSET_40;
       arr_offset = ARR_OFFSET_40;
   }else if(MF.FLAG.MODE5){
       pulse_rot_in = PULSE_ROT_IN_35;
       pulse_rot_out = PULSE_ROT_OUT_35;
+      pulse_offset = PULSE_OFFSET_35;
       arr_offset = ARR_OFFSET_35;
   }
-  pulse_offset = PULSE_OFFSET;
 
   if(ad_fl >= WALL_BASE_FL * 2 && ad_fr >= WALL_BASE_FR * 2){       //前壁が確実にある時b
       while(ad_fl < ROT_START_FL && ad_fr < ROT_START_FR){          //センサ値が基準値に達するまで
@@ -711,7 +713,7 @@ void test_run(void){
 
         rotate_R90();
         driveC(PULSE_SEC_HALF);     //半区画のパルス分デフォルトインターバルで走行
-        MF.FLAG.MODE1 = 1;
+        MF.FLAG.MODE5 = 1;
         for(int i = 0; i < 16; i++){
             MF.FLAG.CTRL = 0;
             driveA(PULSE_SEC_HALF);       //半区画のパルス分加速しながら走行

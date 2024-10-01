@@ -62,7 +62,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                 DEFAULT_INTERVAL -
                     dl); // デフォルトインターバルに制御を加えた値に設定
 
-        }else if(MF.FLAG.ROTATEL && MF.FLAG.MODE1){               //左回転
+        }else if(MF.FLAG.ROTATEL && MF.FLAG.MODE1){               //右回転
             __HAL_TIM_SET_AUTORELOAD(&htim16, ARR_IN_50);
         }else if(MF.FLAG.ROTATEL && MF.FLAG.MODE2){
             __HAL_TIM_SET_AUTORELOAD(&htim16, ARR_IN_50);
@@ -77,7 +77,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
         }
 
 
-         else if(MF.FLAG.ROTATER && MF.FLAG.MODE1){              //右回転
+         else if(MF.FLAG.ROTATER && MF.FLAG.MODE1){              //左回転
             __HAL_TIM_SET_AUTORELOAD(&htim16, ARR_OUT_50);
         }else if(MF.FLAG.ROTATER && MF.FLAG.MODE2){
             __HAL_TIM_SET_AUTORELOAD(&htim16, ARR_OUT_50);
@@ -128,7 +128,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                     dr); // デフォルトインターバルに制御を加えた値に設定
         }
 
-        else if(MF.FLAG.ROTATEL && MF.FLAG.MODE1){                  //左回転
+        else if(MF.FLAG.ROTATEL && MF.FLAG.MODE1){                  //右回転
             __HAL_TIM_SET_AUTORELOAD(&htim17, ARR_OUT_50);
         }else if(MF.FLAG.ROTATEL && MF.FLAG.MODE2){
             __HAL_TIM_SET_AUTORELOAD(&htim17, ARR_OUT_50);
@@ -142,7 +142,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
             __HAL_TIM_SET_AUTORELOAD(&htim17, ARR_OUT_50);
         }
 
-         else if(MF.FLAG.ROTATER && MF.FLAG.MODE1){                  //右回転
+         else if(MF.FLAG.ROTATER && MF.FLAG.MODE1){                  //左回転
             __HAL_TIM_SET_AUTORELOAD(&htim17, ARR_IN_50);
         }else if(MF.FLAG.ROTATER && MF.FLAG.MODE2){
             __HAL_TIM_SET_AUTORELOAD(&htim17, ARR_IN_50);
