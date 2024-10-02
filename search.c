@@ -236,7 +236,11 @@ void searchB_S_go(void) {
 
     //====前に壁が無い想定で問答無用で前進====
     //driveC(PULSE_SEC_HALF);
+<<<<<<< HEAD
     if(!MF.FLAG.SCND){// || (MF.FLAG.SCND == 1 && route[0] != 0x88)){
+=======
+    if(!MF.FLAG.SCND || (MF.FLAG.SCND && route[0] != 0x88)){
+>>>>>>> 4aec764080252d6f57dc0f267129d6f2c56c1107
         half_sectionA();
     }else if(route[0] != 0x88){
         ;//half_sectionA();
