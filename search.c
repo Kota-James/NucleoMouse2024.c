@@ -319,9 +319,7 @@ void searchB_S_go(void) {
 
             half_sectionD(); // 半区間分減速しながら走行し停止
 
-            if((ad_fl > 3200 -50 && ad_fl < 3200 + 50) && (ad_fr > 3100 - 50 && ad_fr < 3100 + 50) && (ad_l > base_l - 50 && ad_l < base_l + 50) && (ad_r > base_r - 50 && ad_r < base_r + 50)){
-                rotate_180(); // 180度回転
-            }else if (ad_fr >= WALL_BASE_FR * 2 && ad_fl >= WALL_BASE_FL * 2 &&
+           if (ad_fr >= WALL_BASE_FR * 2 && ad_fl >= WALL_BASE_FL * 2 &&
                 ad_r >= WALL_BASE_R * 2) { // 前壁と左壁が確実に有る場合
                 rotate_L90();                // 左回転
                 drive_wait(); // 機体が安定するまで待機，drive.h に定義あり
@@ -405,7 +403,6 @@ void searchB_S_back(void) {
     //====前に壁が無い想定で問答無用で前進====
     //driveC(PULSE_SEC_HALF);
     half_sectionA();
-    min_t_cnt += PULSE_SEC_HALF;
     adv_pos();
     write_map();
 
@@ -489,9 +486,7 @@ void searchB_S_back(void) {
 
             half_sectionD(); // 半区間分減速しながら走行し停止
 
-            if((ad_fl > 3200 -50 && ad_fl < 3200 + 50) && (ad_fr > 3100 - 50 && ad_fr < 3100 + 50) && (ad_l > base_l - 50 && ad_l < base_l + 50) && (ad_r > base_r - 50 && ad_r < base_r + 50)){
-                rotate_180(); // 180度回転
-            }if (ad_fr >= WALL_BASE_FR * 2 && ad_fl >= WALL_BASE_FL * 2 &&
+            if (ad_fr >= WALL_BASE_FR * 2 && ad_fl >= WALL_BASE_FL * 2 &&
                 ad_r >= WALL_BASE_R * 2) { // 前壁と左壁が確実に有る場合
                 rotate_L90();                // 左回転
                 drive_wait(); // 機体が安定するまで待機，drive.h に定義あり
