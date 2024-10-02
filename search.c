@@ -235,7 +235,7 @@ void searchB_S_go(void) {
 
     //====前に壁が無い想定で問答無用で前進====
     //driveC(PULSE_SEC_HALF);
-    if(!MF.FLAG.SCND || (MF.FLAG.SCND && route[0] != 0x88)){
+    if(!MF.FLAG.SCND){// || (MF.FLAG.SCND && route[0] != 0x88)){
         half_sectionA();
     }else{
       ;
@@ -418,12 +418,12 @@ void searchB_S_back(void) {
 
     //====スタート位置壁情報取得====
     get_wall_info();    // 壁情報の初期化, 後壁はなくなる
-    wall_info &= ~0x88; // 前壁は存在するはずがないので削除する
-    write_map();        // 壁情報を地図に記入
+    //wall_info &= ~0x88; // 前壁は存在するはずがないので削除する
+    //write_map();        // 壁情報を地図に記入
 
     //====前に壁が無い想定で問答無用で前進====
     //driveC(PULSE_SEC_HALF);
-    if(!MF.FLAG.SCND || (MF.FLAG.SCND && route[0] != 0x88)){
+    if(!MF.FLAG.SCND){// || (MF.FLAG.SCND && route[0] != 0x88)){
       half_sectionA();
     }else{
       ;
