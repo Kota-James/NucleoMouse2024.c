@@ -235,8 +235,11 @@ void searchB_S_go(void) {
 
     //====前に壁が無い想定で問答無用で前進====
     //driveC(PULSE_SEC_HALF);
-    half_sectionA();
-    min_t_cnt += PULSE_SEC_HALF;
+    if(!MF.FLAG.SCND || (MF.FLAG.SCND && route[0] != 0x88)){
+        half_sectionA();
+    }else{
+      ;
+    }
     adv_pos();
     write_map();
 
@@ -263,13 +266,22 @@ void searchB_S_go(void) {
             }
 
             if((r_cnt_temp == 1)){
-                one_section();
+              if(r_cnt == 1){
+                  MF.FLAG.CTRL = 1;
+                  driveA(PULSE_SEC_HALF * 1.5);
+                  driveD(PULSE_SEC_HALF * 1.5);
+              }else{
+                  one_section();
+              }
             }
             else if(r_cnt_temp <= 3){     //１区画加速
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 2;
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 2);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 2));
+                if(r_cnt == 1){
+                    driveU(PULSE_SEC_HALF);
+                }
                 driveD(PULSE_SEC_HALF * 2);
             }
             else if(r_cnt_temp <= 5){     //２区画加速
@@ -277,6 +289,9 @@ void searchB_S_go(void) {
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 4);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 4));
+                if(r_cnt == 1){
+                    driveU(PULSE_SEC_HALF);
+                }
                 driveD(PULSE_SEC_HALF * 4);
             }
             else if(r_cnt_temp <= 7){     //３区画加速
@@ -284,12 +299,18 @@ void searchB_S_go(void) {
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 6);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 6));
+                if(r_cnt == 1){
+                    driveU(PULSE_SEC_HALF);
+                }
                 driveD(PULSE_SEC_HALF * 6);
             }else{                        //４区画加速
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 8;
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 8);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 8));
+                if(r_cnt == 1){
+                    driveU(PULSE_SEC_HALF);
+                }
                 driveD(PULSE_SEC_HALF * 8);
             }
 
@@ -402,7 +423,11 @@ void searchB_S_back(void) {
 
     //====前に壁が無い想定で問答無用で前進====
     //driveC(PULSE_SEC_HALF);
-    half_sectionA();
+    if(!MF.FLAG.SCND || (MF.FLAG.SCND && route[0] != 0x88)){
+      half_sectionA();
+    }else{
+      ;
+    }
     adv_pos();
     write_map();
 
@@ -430,13 +455,23 @@ void searchB_S_back(void) {
             }
 
             if((r_cnt_temp == 1)){
-                one_section();
+                if(r_cnt == 1){
+                    MF.FLAG.CTRL = 1;
+                    driveA(PULSE_SEC_HALF * 1.5);
+                    driveD(PULSE_SEC_HALF * 1.5);
+                    get_wall_info();
+                }else{
+                    one_section();
+                }
             }
             else if(r_cnt_temp <= 3){     //１区画加速
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 2;
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 2);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 2));
+                if(r_cnt == 1){
+                    driveU(PULSE_SEC_HALF);
+                }
                 driveD(PULSE_SEC_HALF * 2);
             }
             else if(r_cnt_temp <= 5){     //２区画加速
@@ -444,6 +479,9 @@ void searchB_S_back(void) {
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 4);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 4));
+                if(r_cnt == 1){
+                    driveU(PULSE_SEC_HALF);
+                }
                 driveD(PULSE_SEC_HALF * 4);
             }
             else if(r_cnt_temp <= 7){     //３区画加速
@@ -451,12 +489,18 @@ void searchB_S_back(void) {
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 6);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 6));
+                if(r_cnt == 1){
+                    driveU(PULSE_SEC_HALF);
+                }
                 driveD(PULSE_SEC_HALF * 6);
             }else{                        //４区画加速
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 8;
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 8);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 8));
+                if(r_cnt == 1){
+                    driveU(PULSE_SEC_HALF);
+                }
                 driveD(PULSE_SEC_HALF * 8);
             }
 
