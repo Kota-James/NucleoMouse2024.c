@@ -235,7 +235,7 @@ void searchB_S_go(void) {
 
     //====前に壁が無い想定で問答無用で前進====
     //driveC(PULSE_SEC_HALF);
-    if(!MF.FLAG.SCND){// || (MF.FLAG.SCND && route[0] != 0x88)){
+    if(!MF.FLAG.SCND || (MF.FLAG.SCND && route[0] != 0x88)){
         half_sectionA();
     }else{
       ;
@@ -270,6 +270,7 @@ void searchB_S_go(void) {
                   MF.FLAG.CTRL = 1;
                   driveA(PULSE_SEC_HALF * 1.5);
                   driveD(PULSE_SEC_HALF * 1.5);
+                  get_wall_info();
               }else{
                   one_section();
               }
