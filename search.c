@@ -236,14 +236,8 @@ void searchB_S_go(void) {
 
     //====前に壁が無い想定で問答無用で前進====
     //driveC(PULSE_SEC_HALF);
-<<<<<<< HEAD
     if(!MF.FLAG.SCND){// || (MF.FLAG.SCND == 1 && route[0] != 0x88)){
-=======
-    if(!MF.FLAG.SCND || (MF.FLAG.SCND && route[0] != 0x88)){
->>>>>>> 4aec764080252d6f57dc0f267129d6f2c56c1107
         half_sectionA();
-    }else if(route[0] != 0x88){
-        ;//half_sectionA();
     }else{
       ;
     }
@@ -338,7 +332,13 @@ void searchB_S_go(void) {
             break;
         //----右折----
         case 0x44:
-
+            if(MF.FLAG.SCND){
+                if(r_cnt == 1){
+                    if(route[0] == 0x44){
+                        driveU2(PULSE_SEC_HALF, ARR_OFFSET);
+                    }
+                }
+            }
             rotate_R90_S();    // 右回転
             turn_dir(DIR_TURN_R90); // マイクロマウス内部位置情報でも右回転処理
             get_wall_info();
@@ -526,6 +526,13 @@ void searchB_S_back(void) {
             break;
         //----右折----
         case 0x44:
+            if(MF.FLAG.SCND){
+                if(r_cnt == 1){
+                    if(route[0] == 0x44){
+                        driveU2(PULSE_SEC_HALF, ARR_OFFSET);
+                    }
+                }
+            }
 
             //half_sectionD(); // 半区画分減速しながら走行し停止
             rotate_R90_S();    // 右回転
@@ -573,6 +580,13 @@ void searchB_S_back(void) {
             break;
         //----左折----
         case 0x11:
+            if(MF.FLAG.SCND){
+                if(r_cnt == 1){
+                    if(route[0] == 0x11){
+                        driveU2(PULSE_SEC_HALF, ARR_OFFSET);
+                    }
+                }
+            }
 
             //half_sectionD(); // 半区画分減速しながら走行し停止
             rotate_L90_S();    // 左回転
