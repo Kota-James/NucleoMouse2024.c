@@ -233,14 +233,26 @@ void searchB_S_go(void) {
     wall_info &= ~0x88; // 前壁は存在するはずがないので削除する
     write_map();        // 壁情報を地図に記入
 
-
     //====前に壁が無い想定で問答無用で前進====
     //driveC(PULSE_SEC_HALF);
-    if(!MF.FLAG.SCND){// || (MF.FLAG.SCND == 1 && route[0] != 0x88)){
+  /*  if(!MF.FLAG.SCND){// || (MF.FLAG.SCND == 1 && route[0] != 0x88)){
         half_sectionA();
     }else{
       ;
     }
+    */
+    if(!MF.FLAG.SCND){
+      half_sectionA();
+    }else{
+      //driveU2(PULSE_SEC_HALF, table[min_t_cnt]);
+      int temp = min_t_cnt;
+      min_t_cnt = 0;
+      driveA(PULSE_SEC_HALF / 2);
+      driveD(PULSE_SEC_HALF / 2);
+      get_wall_info();
+      min_t_cnt = temp;
+    }
+
     adv_pos();
     write_map();
 
@@ -267,23 +279,23 @@ void searchB_S_go(void) {
             }
 
             if((r_cnt_temp == 1)){
-              if(r_cnt == 1){
+             /* if(r_cnt == 1){
                   MF.FLAG.CTRL = 1;
                   driveA(PULSE_SEC_HALF * 1.5);
                   driveD(PULSE_SEC_HALF * 1.5);
                   get_wall_info();
               }else{
-                  one_section();
-              }
+                 */ one_section();
+              //}
             }
             else if(r_cnt_temp <= 3){     //１区画加速
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 2;
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 2);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 2));
-                if(r_cnt == 1){
+                /*if(r_cnt == 1){
                     driveU(PULSE_SEC_HALF);
-                }
+                }*/
                 driveD(PULSE_SEC_HALF * 2);
             }
             else if(r_cnt_temp <= 5){     //２区画加速
@@ -291,9 +303,9 @@ void searchB_S_go(void) {
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 4);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 4));
-                if(r_cnt == 1){
+                /*if(r_cnt == 1){
                     driveU(PULSE_SEC_HALF);
-                }
+                }*/
                 driveD(PULSE_SEC_HALF * 4);
             }
             else if(r_cnt_temp <= 7){     //３区画加速
@@ -301,18 +313,18 @@ void searchB_S_go(void) {
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 6);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 6));
-                if(r_cnt == 1){
+                /*if(r_cnt == 1){
                     driveU(PULSE_SEC_HALF);
-                }
+                }*/
                 driveD(PULSE_SEC_HALF * 6);
             }else{                        //４区画加速
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 8;
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 8);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 8));
-                if(r_cnt == 1){
+                /*if(r_cnt == 1){
                     driveU(PULSE_SEC_HALF);
-                }
+                }*/
                 driveD(PULSE_SEC_HALF * 8);
             }
 
@@ -332,13 +344,6 @@ void searchB_S_go(void) {
             break;
         //----右折----
         case 0x44:
-            if(MF.FLAG.SCND){
-                if(r_cnt == 1){
-                    if(route[0] == 0x44){
-                        driveU2(PULSE_SEC_HALF, ARR_OFFSET);
-                    }
-                }
-            }
             rotate_R90_S();    // 右回転
             turn_dir(DIR_TURN_R90); // マイクロマウス内部位置情報でも右回転処理
             get_wall_info();
@@ -431,11 +436,23 @@ void searchB_S_back(void) {
 
     //====前に壁が無い想定で問答無用で前進====
     //driveC(PULSE_SEC_HALF);
-    if(!MF.FLAG.SCND){// || (MF.FLAG.SCND && route[0] != 0x88)){
+    /*if(!MF.FLAG.SCND){// || (MF.FLAG.SCND && route[0] != 0x88)){
       half_sectionA();
     }else{
       ;
+    }*/
+    if(!MF.FLAG.SCND){
+        half_sectionA();
+    }else{
+      //driveU2(PULSE_SEC_HALF, table[min_t_cnt]);
+      int temp = min_t_cnt;
+      min_t_cnt = 0;
+      driveA(PULSE_SEC_HALF / 2);
+      driveD(PULSE_SEC_HALF / 2);
+      min_t_cnt = temp;
+      get_wall_info();
     }
+
     adv_pos();
     write_map();
 
@@ -463,23 +480,23 @@ void searchB_S_back(void) {
             }
 
             if((r_cnt_temp == 1)){
-                if(r_cnt == 1){
+                /*if(r_cnt == 1){
                     MF.FLAG.CTRL = 1;
                     driveA(PULSE_SEC_HALF * 1.5);
                     driveD(PULSE_SEC_HALF * 1.5);
                     get_wall_info();
                 }else{
-                    one_section();
-                }
+                  */  one_section();
+                //}
             }
             else if(r_cnt_temp <= 3){     //１区画加速
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 2;
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 2);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 2));
-                if(r_cnt == 1){
+                /*if(r_cnt == 1){
                     driveU(PULSE_SEC_HALF);
-                }
+                }*/
                 driveD(PULSE_SEC_HALF * 2);
             }
             else if(r_cnt_temp <= 5){     //２区画加速
@@ -487,9 +504,9 @@ void searchB_S_back(void) {
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 4);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 4));
-                if(r_cnt == 1){
+                /*if(r_cnt == 1){
                     driveU(PULSE_SEC_HALF);
-                }
+                }*/
                 driveD(PULSE_SEC_HALF * 4);
             }
             else if(r_cnt_temp <= 7){     //３区画加速
@@ -497,18 +514,18 @@ void searchB_S_back(void) {
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 6);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 6));
-                if(r_cnt == 1){
+               /* if(r_cnt == 1){
                     driveU(PULSE_SEC_HALF);
-                }
+                }*/
                 driveD(PULSE_SEC_HALF * 6);
             }else{                        //４区画加速
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 8;
                 MF.FLAG.CTRL = 1;
                 driveA(PULSE_SEC_HALF * 8);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 8));
-                if(r_cnt == 1){
+                /*if(r_cnt == 1){
                     driveU(PULSE_SEC_HALF);
-                }
+                }*/
                 driveD(PULSE_SEC_HALF * 8);
             }
 
@@ -526,13 +543,13 @@ void searchB_S_back(void) {
             break;
         //----右折----
         case 0x44:
-            if(MF.FLAG.SCND){
+            /*if(MF.FLAG.SCND){
                 if(r_cnt == 1){
                     if(route[0] == 0x44){
                         driveU2(PULSE_SEC_HALF, ARR_OFFSET);
                     }
                 }
-            }
+            }*/
 
             //half_sectionD(); // 半区画分減速しながら走行し停止
             rotate_R90_S();    // 右回転
