@@ -281,11 +281,12 @@ void searchB_S_go(void) {
             }
 
             if((r_cnt_temp == 1)){
+              if(MF.FLAG.MODE2 || MF.FLAG.MODE3){
                 if(route[r_cnt -2] != 0x88){
                     rot_forward_ctrl = 1;
                     one_section();
                     rot_forward_ctrl = 0;
-                }else{
+                }}else{
              /* if(r_cnt == 1){
                   MF.FLAG.CTRL = 1;
                   driveA(PULSE_SEC_HALF * 1.5);
@@ -493,11 +494,12 @@ void searchB_S_back(void) {
             }
 
             if((r_cnt_temp == 1)){
+              if(MF.FLAG.MODE2 || MF.FLAG.MODE3){
                 if(route[r_cnt -2] != 0x88){
                     rot_forward_ctrl = 1;
                     one_section();
                     rot_forward_ctrl = 0;
-                }else{
+                }}else{
                 /*if(r_cnt == 1){
                     MF.FLAG.CTRL = 1;
                     driveA(PULSE_SEC_HALF * 1.5);
@@ -637,7 +639,9 @@ void searchB_S_back(void) {
             break;
         }
         adv_pos();
-        conf_route();
+        if(!MF.FLAG.SCND){
+            conf_route();
+        }
 
     } while ((mouse.x != goal_x) ||
              (mouse.y != goal_y)); // 現在座標とgoal座標が等しくなるまで実行
