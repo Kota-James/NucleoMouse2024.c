@@ -721,12 +721,12 @@ void test_run(void){
         MF.FLAGS = 0;
         drive_set_dir(FORWARD);     //前進するようにモータの回転方向を設定
 
-        driveA(2 * PULSE_SEC_HALF);     //半区画のパルス分加速しながら走行
-        driveU(2 * PULSE_SEC_HALF);     //半区画のパルス分等速で走行
-        driveD(2 * PULSE_SEC_HALF);     //半区画のパルス分減速しながら走行。走行後は停止する
-
-        rotate_R90();
-        driveC(PULSE_SEC_HALF);     //半区画のパルス分デフォルトインターバルで走行
+        driveA(PULSE_SEC_HALF);     //半区画のパルス分加速しながら走行
+        driveU(4 * PULSE_SEC_HALF);     //半区画のパルス分等速で走行
+        //driveD(2 * PULSE_SEC_HALF);     //半区画のパルス分減速しながら走行。走行後は停止する
+        MF.FLAG.MODE1 = 1;
+        rotate_R90_S();
+        //driveC(PULSE_SEC_HALF);     //半区画のパルス分デフォルトインターバルで走行
         MF.FLAG.MODE3 = 1;
         for(int i = 0; i < 16; i++){
             MF.FLAG.CTRL = 0;
@@ -752,10 +752,10 @@ void test_run(void){
 
         driveA(PULSE_SEC_HALF);     //半区画のパルス分加速しながら走行
         //driveU(2 * PULSE_SEC_HALF);     //半区画のパルス分等速で走行
-        driveD(PULSE_SEC_HALF);     //半区画のパルス分減速しながら走行。走行後は停止する
-
-        rotate_R90();
-        driveC(PULSE_SEC_HALF);     //半区画のパルス分デフォルトインターバルで走行
+        //driveD(PULSE_SEC_HALF);     //半区画のパルス分減速しながら走行。走行後は停止する
+        MF.FLAG.MODE1 = 1;
+        rotate_R90_S();
+        //driveC(PULSE_SEC_HALF);     //半区画のパルス分デフォルトインターバルで走行
         MF.FLAG.MODE5 = 1;
         for(int i = 0; i < 16; i++){
             MF.FLAG.CTRL = 0;
