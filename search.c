@@ -18,6 +18,7 @@ void search_init(void) {
 
     //====マウスフラグの初期化===
     MF.FLAGS = 0; // フラグクリア
+    tyokusen_ctrl = 0;
 
     //====探索系の変数の初期化====
     goal_x = GOAL_X; // GOAL_Xはglobal.hにマクロ定義あり
@@ -301,31 +302,37 @@ void searchB_S_go(void) {
             else if(r_cnt_temp <= 5){     //２区画加速
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 4;
                 MF.FLAG.CTRL = 1;
+                tyokusen_ctrl = 1;
                 driveA(PULSE_SEC_HALF * 4);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 4));
                 /*if(r_cnt == 1){
                     driveU(PULSE_SEC_HALF);
                 }*/
                 driveD(PULSE_SEC_HALF * 4);
+                tyokusen_ctrl = 0;
             }
             else if(r_cnt_temp <= 7){     //３区画加速
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 6;
                 MF.FLAG.CTRL = 1;
+                tyokusen_ctrl = 1;
                 driveA(PULSE_SEC_HALF * 6);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 6));
                 /*if(r_cnt == 1){
                     driveU(PULSE_SEC_HALF);
                 }*/
                 driveD(PULSE_SEC_HALF * 6);
+                tyokusen_ctrl = 0;
             }else{                        //４区画加速
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 8;
                 MF.FLAG.CTRL = 1;
+                tyokusen_ctrl = 1;
                 driveA(PULSE_SEC_HALF * 8);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 8));
                 /*if(r_cnt == 1){
                     driveU(PULSE_SEC_HALF);
                 }*/
                 driveD(PULSE_SEC_HALF * 8);
+                tyokusen_ctrl = 0;
             }
 
             get_wall_info();
@@ -502,31 +509,37 @@ void searchB_S_back(void) {
             else if(r_cnt_temp <= 5){     //２区画加速
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 4;
                 MF.FLAG.CTRL = 1;
+                tyokusen_ctrl = 1;
                 driveA(PULSE_SEC_HALF * 4);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 4));
                 /*if(r_cnt == 1){
                     driveU(PULSE_SEC_HALF);
                 }*/
                 driveD(PULSE_SEC_HALF * 4);
+                tyokusen_ctrl = 0;
             }
             else if(r_cnt_temp <= 7){     //３区画加速
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 6;
                 MF.FLAG.CTRL = 1;
+                tyokusen_ctrl = 1;
                 driveA(PULSE_SEC_HALF * 6);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 6));
                /* if(r_cnt == 1){
                     driveU(PULSE_SEC_HALF);
                 }*/
                 driveD(PULSE_SEC_HALF * 6);
+                tyokusen_ctrl = 0;
             }else{                        //４区画加速
                 max_t_cnt = min_t_cnt + PULSE_SEC_HALF * 8;
                 MF.FLAG.CTRL = 1;
+                tyokusen_ctrl = 1;
                 driveA(PULSE_SEC_HALF * 8);
                 driveU(PULSE_SEC_HALF * 2 * (r_cnt_temp - 8));
                 /*if(r_cnt == 1){
                     driveU(PULSE_SEC_HALF);
                 }*/
                 driveD(PULSE_SEC_HALF * 8);
+                tyokusen_ctrl = 0;
             }
 
             get_wall_info();

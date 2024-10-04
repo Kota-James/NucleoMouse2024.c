@@ -330,6 +330,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                     dr *= CTRL_MODE5;
                 }
 
+                if(tyokusen_ctrl){
+                    dl /= 3;
+                    dr /= 3;
+                }
+
             } else {
                 // 制御フラグがなければ制御値0
                 dl = dr = 0;
