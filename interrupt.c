@@ -334,6 +334,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                     dl /= 3;
                     dr /= 3;
                 }
+                if(rot_forward_ctrl){
+                    dl *= 2;
+                    dr *= 2;
+                }
 
             } else {
                 // 制御フラグがなければ制御値0

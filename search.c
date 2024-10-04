@@ -19,6 +19,7 @@ void search_init(void) {
     //====マウスフラグの初期化===
     MF.FLAGS = 0; // フラグクリア
     tyokusen_ctrl = 0;
+    rot_forward_ctrl = 0;
 
     //====探索系の変数の初期化====
     goal_x = GOAL_X; // GOAL_Xはglobal.hにマクロ定義あり
@@ -280,13 +281,18 @@ void searchB_S_go(void) {
             }
 
             if((r_cnt_temp == 1)){
+                if(route[r_cnt -2] != 0x88){
+                    rot_forward_ctrl = 1;
+                    one_section();
+                    rot_forward_ctrl = 0;
+                }else{
              /* if(r_cnt == 1){
                   MF.FLAG.CTRL = 1;
                   driveA(PULSE_SEC_HALF * 1.5);
                   driveD(PULSE_SEC_HALF * 1.5);
                   get_wall_info();
               }else{
-                 */ one_section();
+                 */ one_section();}
               //}
             }
             else if(r_cnt_temp <= 3){     //１区画加速
@@ -487,13 +493,18 @@ void searchB_S_back(void) {
             }
 
             if((r_cnt_temp == 1)){
+                if(route[r_cnt -2] != 0x88){
+                    rot_forward_ctrl = 1;
+                    one_section();
+                    rot_forward_ctrl = 0;
+                }else{
                 /*if(r_cnt == 1){
                     MF.FLAG.CTRL = 1;
                     driveA(PULSE_SEC_HALF * 1.5);
                     driveD(PULSE_SEC_HALF * 1.5);
                     get_wall_info();
                 }else{
-                  */  one_section();
+                  */  one_section();}
                 //}
             }
             else if(r_cnt_temp <= 3){     //１区画加速
