@@ -202,7 +202,7 @@ int main(void)
             MF.FLAG.SCND = 1;   //Set secondary travel flag
             goal_x = GOAL_X;
             goal_y = GOAL_Y;
-            min_t_cnt = 250;
+            min_t_cnt = 450;
             MF.FLAG.MODE1 = 0;
             MF.FLAG.MODE2 = 0;
             MF.FLAG.MODE3 = 1;
@@ -213,7 +213,7 @@ int main(void)
 
             goal_x = goal_y = 0;
 
-            min_t_cnt = 250;
+            min_t_cnt = 4250;
             searchB_S_back();
 
             //goal_x = GOAL_X;
@@ -228,7 +228,7 @@ int main(void)
 
             //butt_adjust();
             //get_base();
-            min_t_cnt = 2250;
+            min_t_cnt = 4250;
             MF.FLAG.MODE1 = 0;
             MF.FLAG.MODE2 = 0;
             MF.FLAG.MODE3 = 0;
@@ -239,7 +239,7 @@ int main(void)
 
             goal_x = goal_y = 0;
 
-            min_t_cnt = 2250;
+            min_t_cnt = 4250;
             searchB_S_back();
 
             //goal_x = GOAL_X;
@@ -257,7 +257,7 @@ int main(void)
 
             //butt_adjust();
             //get_base();
-            min_t_cnt = 4250;
+            min_t_cnt = 6250;
             MF.FLAG.MODE1 = 0;
             MF.FLAG.MODE2 = 0;
             MF.FLAG.MODE3 = 0;
@@ -268,7 +268,7 @@ int main(void)
 
             goal_x = goal_y = 0;
 
-            min_t_cnt = 4250;
+            min_t_cnt = 6250;
             searchB_S_back();
 
             goal_x = GOAL_X;

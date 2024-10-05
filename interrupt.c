@@ -335,8 +335,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                     dr /= 3;
                 }
                 if(rot_forward_ctrl){
-                    dl *= 0.5;
-                    dr *= 0.5;
+                    dl *= 0.7;
+                    dr *= 0.7;
                 }
 
             } else {

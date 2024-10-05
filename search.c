@@ -281,7 +281,7 @@ void searchB_S_go(void) {
             }
 
             if((r_cnt_temp == 1)){
-              if(MF.FLAG.MODE2 || MF.FLAG.MODE3){
+              if(MF.FLAG.MODE2){
                 if(route[r_cnt -2] != 0x88){
                     rot_forward_ctrl = 1;
                     one_section();
@@ -494,7 +494,7 @@ void searchB_S_back(void) {
             }
 
             if((r_cnt_temp == 1)){
-              if(MF.FLAG.MODE2 || MF.FLAG.MODE3){
+              if(MF.FLAG.MODE2){
                 if(route[r_cnt -2] != 0x88){
                     rot_forward_ctrl = 1;
                     one_section();
