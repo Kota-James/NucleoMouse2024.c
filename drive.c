@@ -145,13 +145,13 @@ void rotate_L90_S(void){
       rot_start_fr = ROT_START_FR_34;
   }
 
-  if(ad_fl >= WALL_BASE_FL * 2 && ad_fr >= WALL_BASE_FR * 2){       //前壁が確実にある時b
+  /*if(ad_fl >= WALL_BASE_FL * 2 && ad_fr >= WALL_BASE_FR * 2){       //前壁が確実にある時b
       while(ad_fl < rot_start_fl && ad_fr < rot_start_fr){          //センサ値が基準値に達するまで
           driveU2(1, arr_offset);         //1パルス分だけ進む
       }
-  }else{                                        //前壁がない時b
+  }else{*/                                        //前壁がない時b
       driveU2(pulse_offset, arr_offset);        //設定したパルス分だけ進む
-  }
+  //}
 
 
   MF.FLAG.ROTATER = 1;
@@ -198,13 +198,13 @@ void rotate_R90_S(void){
       rot_start_fr = ROT_START_FR_34;
   }
 
-  if(ad_fl >= WALL_BASE_FL * 2 && ad_fr >= WALL_BASE_FR * 2){       //前壁が確実にある時
+  /*if(ad_fl >= WALL_BASE_FL * 2 && ad_fr >= WALL_BASE_FR * 2){       //前壁が確実にある時
       while(ad_fl < rot_start_fl && ad_fr < rot_start_fr){          //センサ値が基準値に達するまで
           driveU2(1, arr_offset);         //1パルス分だけ進む
       }
-  }else{                                        //前壁がない時b
+  }else{*/                                        //前壁がない時b
       driveU2(pulse_offset, arr_offset);        //設定したパルス分だけ進む
-  }
+ // }
 
 
   MF.FLAG.ROTATEL = 1;
