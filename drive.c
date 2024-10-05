@@ -122,14 +122,14 @@ void rotate_L90_S(void){
   MF.FLAG.CTRL = 1;                   //制御無効
   drive_set_dir(FORWARD);            //右に旋回するようモータの回転方向を設定
 
-  if(MF.FLAG.MODE1 || MF. FLAG.MODE2 || MF.FLAG.MODE3){
+  if(MF.FLAG.MODE1 || MF. FLAG.MODE2){
       pulse_rot_in = PULSE_ROT_IN_L50;
       pulse_rot_out = PULSE_ROT_OUT_L50;
       pulse_offset = PULSE_OFFSET_50;
       arr_offset = ARR_OFFSET_L50;
       rot_start_fl = ROT_START_FL_38;
       rot_start_fr = ROT_START_FR_38;
-  }else if(MF.FLAG.MODE4){
+  }else if(MF.FLAG.MODE3 || MF.FLAG.MODE4){
       pulse_rot_in = PULSE_ROT_IN_L40;
       pulse_rot_out = PULSE_ROT_OUT_L40;
       pulse_offset = PULSE_OFFSET_40;
@@ -175,14 +175,14 @@ void rotate_R90_S(void){
   MF.FLAG.CTRL = 1;                   //制御を無効にする
   drive_set_dir(FORWARD);            //左に旋回するようモータの回転方向を設定
 
-  if(MF.FLAG.MODE1 || MF. FLAG.MODE2 || MF.FLAG.MODE3){
+  if(MF.FLAG.MODE1 || MF. FLAG.MODE2){
       pulse_rot_in = PULSE_ROT_IN_R50;
       pulse_rot_out = PULSE_ROT_OUT_R50;
       pulse_offset = PULSE_OFFSET_50;
       arr_offset = ARR_OFFSET_R50;
       rot_start_fl = ROT_START_FL_38;
       rot_start_fr = ROT_START_FR_38;
-  }else if(MF.FLAG.MODE4){
+  }else if(MF.FLAG.MODE3 || MF.FLAG.MODE4){
       pulse_rot_in = PULSE_ROT_IN_R40;
       pulse_rot_out = PULSE_ROT_OUT_R40;
       pulse_offset = PULSE_OFFSET_40;
